@@ -1,0 +1,77 @@
+.page{
+    background: #f9f9f9;
+    padding-top: 50px;
+}
+
+.page-title{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 16px 0;
+}
+
+.steps{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.steps div{
+    width: 16px;
+    height: 16px;
+    background: #EFEFEF;
+    border-radius: 50px;
+}
+
+
+.steps span{
+    width: 100px;
+    height: 6px;
+    background: #EFEFEF;
+}
+
+.steps div.active, 
+.steps span.active{
+    background: #6F35FF;
+}
+
+@media (max-width: 375px) {
+    .steps span{
+        width: 80px;
+    }
+}
+
+@media (max-width: 320px) {
+    .steps span{
+        width: 60px;
+    }
+}
+
+.features-list{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 100px;
+}
+
+.page-title{
+    font-family: Manrope;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.fixed-button-container{
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.fixed-button-container button{
+    background: #6F35FF;
+    color: white;
+}

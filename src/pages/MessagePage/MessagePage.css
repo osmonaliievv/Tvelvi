@@ -1,0 +1,40 @@
+.message-container {
+    height: 100vh; /* Высота на весь экран */
+    width: 100vw;  /* Ширина на весь экран */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    background: linear-gradient(135deg, #E5E6FA, #BABDFF);
+    box-sizing: border-box;
+}
+.sms-input{
+    width: 52px;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    outline: none;
+    transition: 0.2s;
+}
+.sms-inputs {
+    display: flex;
+    gap: 12px;
+}
+
+button {
+    width: 223px;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background-color: #E9E9E9;
+    color: #A8A8A8;
+    font-weight: bold;
+    cursor: not-allowed;
+}

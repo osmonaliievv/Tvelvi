@@ -1,0 +1,47 @@
+.registerPage {
+    height: 100vh; /* Высота на весь экран */
+    width: 100vw;  /* Ширина на весь экран */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    background: linear-gradient(135deg, #E5E6FA, #BABDFF);
+    box-sizing: border-box;
+}
+.register-container {
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+input {
+    width: 234px;
+    height: 48px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    width: 223px;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background-color: #E9E9E9;
+    color: #A8A8A8;
+    font-weight: bold;
+    cursor: not-allowed;
+}
+
+button.button-active {
+    background-color: #8A2BE2; /* фиолетовый */
+    cursor: pointer;
+}
+button.button-active {
+    background-color: #8A2BE2;     /* Фиолетовый фон */
+    color: white;                  /* Белый текст */
+    cursor: pointer;
+}

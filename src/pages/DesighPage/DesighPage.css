@@ -1,0 +1,107 @@
+.design-page {
+    padding: 16px 16px 80px 16px;
+    background-color: #ffffff;
+}
+
+.design-page-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.design-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.design-fixed-button-container {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 375px;
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.design-action-button {
+    background-color: #7c3aed;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 343px;
+}
+
+.design-action-button:hover {
+    background-color: #6d28d9;
+}
+
+/* Переопределяем стили FeatureCard для DesignPage */
+.design-features-list .feature-card {
+    height: 200px;
+    background-color: #EDE9FE;
+    border-radius: 16px;
+    box-shadow: none;
+}
+
+.design-features-list .feature-card .feature-price-top {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.design-features-list .feature-card .feature-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.design-features-list .feature-card .feature-description {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.design-features-list .feature-card .feature-price-bottom {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.design-features-list .feature-card .feature-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7c3aed;
+}
+
+.design-features-list .feature-card .feature-image {
+    width: 100px;
+    height: 150px;
+}
+
+/* Стили для специальной третьей карточки */
+.design-features-list .feature-card-special {
+    background-color: #6D28D9;
+}
+
+.design-features-list .feature-card-special .feature-price-top,
+.design-features-list .feature-card-special .feature-title,
+.design-features-list .feature-card-special .feature-description,
+.design-features-list .feature-card-special .feature-price-bottom,
+.design-features-list .feature-card-special .feature-price {
+    color: #ffffff;
+}
