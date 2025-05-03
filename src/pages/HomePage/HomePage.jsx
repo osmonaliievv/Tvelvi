@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./HomePage.css";
 import left_card from "../../assets/Frame 168.svg";
 import center_card from "../../assets/Frame 169.svg";
@@ -12,12 +12,17 @@ import training_app from "../../assets/Frame 213.svg";
 import img_partners from "../../assets/Remove-bg.ai_1732383936587 1.svg";
 import main_image from "../../assets/Black.svg";
 import { useNavigate } from "react-router-dom";
+import burgerPhoto from "../../assets/image 69.svg";
+import cart from "../../assets/image 72.svg";
+import holdPhone from "../../assets/pngwing.com 1.svg";
+import minivan from "../../assets/image 70.svg";
+import like from "../../assets/image 71.svg";
+import study from "../../assets/image 73.svg";
+
 export default function HomePage() {
-  const [activeCategory, setActiveCategory] = useState(
-    "Приложения",
-    "Разработка сайтов",
-    "Разработка игр"
-  );
+  const [activeCategory, setActiveCategory] = useState("Приложения");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
 
   const handleClickForPartners = () => {
@@ -30,12 +35,54 @@ export default function HomePage() {
 
   const data = {
     Приложения: [
-      { title: "Фудтех-приложение", image: foodtech_app },
-      { title: "Интернет-магазин", image: internet_marketplace },
-      { title: "Сервис бронирования", image: service_block },
-      { title: "Сервис доставки", image: service_delivery },
-      { title: "Приложение соцсети", image: messenger_app },
-      { title: "Приложение обучения", image: training_app },
+      {
+        title: "Фудтех-приложение",
+        image: foodtech_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "100 000",
+        image2: burgerPhoto,
+      },
+      {
+        title: "Интернет-магазин",
+        image: internet_marketplace,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "120 000",
+        image2: cart,
+      },
+      {
+        title: "Сервис бронирования",
+        image: service_block,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "110 000",
+        image2: holdPhone,
+      },
+      {
+        title: "Сервис доставки",
+        image: service_delivery,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "130 000",
+        image2: minivan,
+      },
+      {
+        title: "Приложение соцсети",
+        image: messenger_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "200 000",
+        image2: like,
+      },
+      {
+        title: "Приложение обучения",
+        image: training_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "150 000",
+        image2: study,
+      },
     ],
     "Разработка сайтов": [
       { title: "Фудтех-приложение1", image: foodtech_app },
@@ -54,6 +101,19 @@ export default function HomePage() {
       { title: "Приложение обучения", image: training_app },
     ],
   };
+
+  const openModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+    document.body.classList.add("modal-open"); // Добавляем класс к body
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+    document.body.classList.remove("modal-open"); // Удаляем класс с body
+  };
+
   return (
     <div className="home-container">
       <button onClick={handleClick2} className="profile_button">
@@ -132,7 +192,9 @@ export default function HomePage() {
               style={{
                 width: "150px",
                 textAlign: "center",
+                cursor: "pointer",
               }}
+              onClick={() => openModal(item)}
             >
               <img
                 src={item.image}
@@ -186,6 +248,53 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      {isModalOpen && selectedItem && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+          onClick={closeModal}
+        >
+          <div
+            style={{
+              background: "white",
+              padding: "12px 14px",
+              borderRadius: "12px",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+              <div>
+                <h3>{selectedItem.title}</h3>
+                <p style={{ width: "225px", fontSize: "12px" }}>
+                  {selectedItem.description}
+                </p>
+              </div>
+              <div>
+                <img
+                  src={selectedItem.image2}
+                  alt={selectedItem.title}
+                  style={{ width: "94px", margin: "16px 0" }}
+                />
+              </div>
+            </div>
+            <div className="Model_flex">
+              <h3 className="Model_price">{selectedItem.price} ₽+</h3>
+              <button className="Model_btn1">Настроить</button>
+              <button className="Model_btn2">Перейти</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

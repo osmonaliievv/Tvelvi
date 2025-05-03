@@ -10,7 +10,8 @@ import DesignPage from "../pages/DesighPage/DesighPage";
 import FinalPricePage from "../pages/FinalPricePage/FinalPricePage";
 import AdditionalFeaturesPage from "../pages/AdditionalFeaturesPage/AdditionalFeaturesPage";
 import { Routes, Route } from "react-router-dom";
-
+import ScrollToTop from "../components/ScrollToTop";
+import MyComponent from "../components/MyComponent";
 const routes = [
   { id: 1, path: "/", element: <RegisterPage /> },
   { id: 2, path: "/message", element: <MessagePage /> },
@@ -31,11 +32,15 @@ const routes = [
 
 const MainRoutes = () => {
   return (
-    <Routes>
-      {routes.map(({ id, path, element }) => (
-        <Route key={id} path={path} element={element} />
-      ))}
-    </Routes>
+    <>
+      <ScrollToTop />
+      <MyComponent />
+      <Routes>
+        {routes.map(({ id, path, element }) => (
+          <Route key={id} path={path} element={element} />
+        ))}
+      </Routes>
+    </>
   );
 };
 

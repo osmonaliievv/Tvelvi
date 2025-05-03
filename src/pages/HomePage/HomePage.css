@@ -1,3 +1,6 @@
+body.modal-open {
+  overflow: hidden;
+}
 .home-container {
   background-color: #e9e9e9;
   padding: 10px;
@@ -9,7 +12,7 @@
   background-color: #6f35ff;
   position: absolute;
   top: 10px;
-  left: 344px;
+  left: 320px;
   z-index: 999;
 }
 .info-box {
@@ -20,6 +23,9 @@
   border-radius: 16px;
   padding: 12px;
   position: relative;
+  @media screen and (max-width: 400px) {
+    padding: 0;
+  }
 }
 .info-box_card {
   display: flex;
@@ -59,4 +65,30 @@
   color: #000000;
   font-size: 16px;
   font-weight: 500;
+}
+
+.Model_flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.Model_price {
+  font-size: 20px;
+  color: rgba(111, 53, 255, 1);
+}
+.Model_btn1 {
+  width: 102px;
+  height: 36px;
+  color: rgba(111, 53, 255, 1);
+  padding: 8px 14px;
+  background-color: #fff;
+  border: 1px rgba(111, 53, 255, 1) solid;
+}
+.Model_btn2 {
+  width: 102px;
+  height: 36px;
+  color: white;
+  padding: 8px 14px;
+  background-color: rgba(111, 53, 255, 1);
 }
