@@ -2,7 +2,7 @@ body.modal-open {
   overflow: hidden;
 }
 .home-container {
-  background-color: #e9e9e9;
+  background: linear-gradient(to bottom, rgb(203, 205, 248), white);
   padding: 10px;
 }
 .profile_button {

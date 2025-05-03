@@ -1,0 +1,101 @@
+.successfully {
+  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
+}
+.successfully-container {
+  text-align: center;
+  padding-top: 50px;
+}
+.successfully-title {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 50px;
+}
+.successfully-question-title {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+.successfully-question-section-1 {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 12px;
+  margin: 0 10px 12px 10px;
+}
+.successfully-question-section-2 {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 12px;
+  margin: 0 10px 12px 10px;
+}
+.successfully-question-section-3 {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.15);
+  background: #fff;
+  border-radius: 12px;
+  margin: 0 10px;
+}
+.successfully-question-section-1_img {
+  margin-left: 3px;
+  margin-top: 3px;
+}
+.successfully-question-section-1_text {
+  font-size: 16px;
+  font-weight: 600;
+}
+.successfully-call-us-img {
+  margin-top: 75px;
+}
+.successfully-call-us-text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.final-price-buttonn {
+  background-color: rgba(44, 30, 79, 1);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 13px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 343px;
+  margin-bottom: 20px;
+}
+.final-price-buttonCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.successfully-call-us-button-text {
+  background-color: rgba(44, 30, 79, 1);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 13px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 343px;
+  margin-bottom: 20px;
+}
+.successfully-call-us-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}

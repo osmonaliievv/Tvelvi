@@ -11,7 +11,7 @@ import FinalPricePage from "../pages/FinalPricePage/FinalPricePage";
 import AdditionalFeaturesPage from "../pages/AdditionalFeaturesPage/AdditionalFeaturesPage";
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
-import MyComponent from "../components/MyComponent";
+import SuccessfullyCompleted from "../pages/SuccessfullyCompleted/SuccessfullyCompleted";
 const routes = [
   { id: 1, path: "/", element: <RegisterPage /> },
   { id: 2, path: "/message", element: <MessagePage /> },
@@ -28,13 +28,13 @@ const routes = [
   { id: 9, path: "/designPage", element: <DesignPage /> },
   { id: 10, path: "/finalPrice", element: <FinalPricePage /> },
   { id: 11, path: "/features/*", element: <FeaturesFlow /> },
+  { id: 12, path: "/successfully/", element: <SuccessfullyCompleted /> },
 ];
 
 const MainRoutes = () => {
   return (
     <>
       <ScrollToTop />
-      <MyComponent />
       <Routes>
         {routes.map(({ id, path, element }) => (
           <Route key={id} path={path} element={element} />
