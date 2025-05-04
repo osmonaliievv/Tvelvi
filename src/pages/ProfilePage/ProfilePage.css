@@ -1,52 +1,56 @@
-.profile-page{
-    height: 100vh; /* Высота на весь экран */
-    width: 100vw;  /* Ширина на весь экран */
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 20px;
-
-    background: linear-gradient(135deg, #E5E6FA, #BABDFF);
-    box-sizing: border-box;
+.profile-page {
+  height: 100vh; /* Высота на весь экран */
+  width: 100vw; /* Ширина на весь экран */
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
+  box-sizing: border-box;
 }
-.back_btn{
-    background-color: white;
-    width: 71px;
-    height: 34px;
-    border-radius: 100px;
-    color: black;
-    left: 12px;
-    top: 57px;
-    position: absolute;
+.back_btn {
+  background-color: white;
+  width: 71px;
+  height: 34px;
+  border-radius: 100px;
+  color: black;
+  left: 12px;
+  top: 57px;
+  position: absolute;
+  border: none;
 }
-.profile_icon{
-   margin-top: 71px;
+.profile_icon {
+  margin-top: 71px;
 }
-.order_btn{
-    background-color: #2C1E4F;
-    width: 181px;
-    height: 52px;
-    border-radius: 12px;
-    color: white;
+.order_btn {
+  background-color: #2c1e4f;
+  width: 181px;
+  height: 52px;
+  border-radius: 12px;
+  color: white;
 }
-.bottom_btn{
-    display: flex;
-    justify-content: space-between;
-    margin-top: 72px;
+.bottom_btn {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 72px;
 }
-.exit_btn{
-    width: 73px;
-    height: 22px;
-    background: none;
-    display: flex;
-    gap: 6px;
-    color: #0D0D0D;
+.exit_btn {
+  width: 73px;
+  height: 22px;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #0d0d0d;
+  border: none;
 }
-.delete_btn{
-    width: 153px;
-    height: 22px;
-    background: none;
-    display: flex;
-    gap: 6px;
-    color: #DD483A;
+.delete_btn {
+  width: 153px;
+  height: 22px;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  color: #dd483a;
 }

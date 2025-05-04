@@ -1,79 +1,115 @@
-import React, { useEffect, useState } from "react";
-import "./MessagePage.css";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./MessagePage.css";
 
-export default function MessagePage() {
-  const [code, setCode] = useState(["", "", "", "", ""]);
-  const [secondsLeft, setSecondsLeft] = useState(150); // 2:30 минуты
+const MessagePage = () => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [codeArray, setCodeArray] = useState(["", "", "", "", "", ""]);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (secondsLeft > 0) {
-      const timer = setTimeout(() => {
-        setSecondsLeft((prev) => prev - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [secondsLeft]);
-
-  const formatTime = () => {
-    const min = Math.floor(secondsLeft / 60);
-    const sec = secondsLeft % 60;
-    return `${min.toString().padStart(2, "0")}:${sec
-      .toString()
-      .padStart(2, "0")}`;
-  };
-  const handleChange = (index, value) => {
+  const handleCodeChange = (e, index) => {
+    const value = e.target.value;
     if (/^\d?$/.test(value)) {
-      const updated = [...code];
-      updated[index] = value;
-      setCode(updated);
+      const newCodeArray = [...codeArray];
+      newCodeArray[index] = value;
+      setCodeArray(newCodeArray);
 
-      // автофокус на следующий
-      if (value && index < 4) {
-        const nextInput = document.getElementById(`code-${index + 1}`);
+      if (value && index < 5) {
+        const nextInput = document.getElementById(`code-input-${index + 1}`);
         if (nextInput) nextInput.focus();
       }
     }
   };
-  const handleSubmit = () => {
-    if (isComplete) {
-      navigate("/home"); // переход на главную страницу
+
+  const handleSubmit = async () => {
+    const code = codeArray.join("");
+
+    const rawPhone = phoneNumber.replace(/\D/g, "");
+
+    if (rawPhone.length !== 11 || !rawPhone.startsWith("7")) {
+      setError(
+        "Введите корректный номер телефона без знака '+', например: 7XXXXXXXXX"
+      );
+      return;
+    }
+
+    const formattedPhone = rawPhone;
+
+    if (!formattedPhone || code.length !== 6) {
+      setError("Пожалуйста, введите номер телефона и 6-значный код.");
+      return;
+    }
+
+    console.log("Отправляемые данные:", {
+      phone_number: formattedPhone,
+      code: code,
+    });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/users/verify-code/",
+        {
+          phone_number: formattedPhone,
+          code: code,
+        }
+      );
+
+      console.log("Ответ сервера:", response.data);
+
+      if (response.data.detail === "Код подтверждён") {
+        navigate("/home");
+      } else {
+        setError("Неверный код. Попробуйте снова.");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке кода:", error);
+      if (error.response?.data?.error) {
+        setError(error.response.data.error);
+      } else {
+        setError("Произошла ошибка. Попробуйте позже.");
+      }
     }
   };
-  const isComplete = code.every((digit) => digit !== "");
 
   return (
-    <div className="message-container">
-      <p className="register_name">Регистрация</p>
-      <p className="register_tel">Номер телефона</p>
-      <label className="sms-label">СМС-код</label>
-      <div className="sms-inputs">
-        {code.map((val, i) => (
+    <div className="MessagePage">
+      <h2 className="title">Подтверждение номера</h2>
+
+      <div>
+        <label htmlFor="phoneNumber">Номер телефона:</label>
+        <input
+          type="tel"
+          id="phoneNumber"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="7XXXXXXXXX"
+          maxLength="11"
+        />
+      </div>
+
+      <div className="codeContainer">
+        {codeArray.map((digit, index) => (
           <input
-            key={i}
-            id={`code-${i}`}
+            key={index}
+            id={`code-input-${index}`}
+            type="text"
+            className="codeInput"
             maxLength="1"
-            className="sms-input"
-            value={val}
-            placeholder="0"
-            onChange={(e) => handleChange(i, e.target.value)}
-            type="number"
+            value={digit}
+            onChange={(e) => handleCodeChange(e, index)}
           />
         ))}
       </div>
-      <div className="timer">
-        Код действует: <span className="timer-bold">{formatTime()}</span>
-      </div>
-      <button
-        disabled={!isComplete}
-        className={`submit-button ${
-          isComplete ? "button-active" : "button-disabled"
-        }`}
-        onClick={handleSubmit}
-      >
-        Продолжить
+
+      {error && <div className="error">{error}</div>}
+
+      <button onClick={handleSubmit} className="submitBtn">
+        Подтвердить
       </button>
     </div>
   );
-}
+};
+
+export default MessagePage;

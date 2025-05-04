@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./SuccessfullyCompleted.css";
 import galochka from "../../assets/Frame 193.svg";
 import photo01 from "../../assets/01.svg";
@@ -7,9 +8,20 @@ import photo03 from "../../assets/03.svg";
 import question from "../../assets/Frame 206.svg";
 
 const SuccessfullyCompleted = () => {
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDownloadClick = () => {
+    setShowModal(true);
+  };
+
+  const handleOkayClick = () => {
+    navigate("/profile");
+  };
   return (
     <div className="successfully">
       <div className="successfully-container">
+        {/* Содержание страницы */}
         <div className="successfully-image">
           <img src={galochka} alt="Галочка" />
         </div>
@@ -48,11 +60,25 @@ const SuccessfullyCompleted = () => {
           </div>
         </div>
         <div className="successfully-call-us-button">
-          <button className="successfully-call-us-button-text">
+          <button
+            className="successfully-call-us-button-text"
+            onClick={handleDownloadClick}
+          >
             Скачать счет
           </button>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <p>Счет загружен. Спасибо за заказ!</p>
+            <button className="modal-button" onClick={handleOkayClick}>
+              ОК
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

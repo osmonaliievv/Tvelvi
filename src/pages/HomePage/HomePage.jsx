@@ -18,18 +18,10 @@ import holdPhone from "../../assets/pngwing.com 1.svg";
 import minivan from "../../assets/image 70.svg";
 import like from "../../assets/image 71.svg";
 import study from "../../assets/image 73.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { getCards } from "../../redux/slice/cardsSlice";
+import profilesvg from "../../assets/Frame 193.svg";
+import ProductsList from "../../components/ProductsList";
 
 export default function HomePage() {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.cardsSlice);
-
-  useEffect(() => {
-    dispatch(getCards());
-  }, [dispatch]);
-  console.log(data);
-
   const [activeCategory, setActiveCategory] = useState("Приложения");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -210,28 +202,11 @@ export default function HomePage() {
 
   return (
     <div className="home-container">
+      <ProductsList />
       <div className="profile_button-cover">
-        <button onClick={handleClick2} className="profile_button">
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <ellipse
-              cx="13"
-              cy="6.49996"
-              rx="4.33333"
-              ry="4.33333"
-              fill="white"
-            />
-            <path
-              d="M21.6666 18.9584C21.6666 21.6508 21.6666 23.8334 13 23.8334C4.33331 23.8334 4.33331 21.6508 4.33331 18.9584C4.33331 16.266 8.21351 14.0834 13 14.0834C17.7864 14.0834 21.6666 16.266 21.6666 18.9584Z"
-              fill="white"
-            />
-          </svg>
-        </button>
+        <div onClick={handleClick2} className="profile_button">
+          <img src={profilesvg} alt="" />
+        </div>
       </div>
 
       <div className="profile_main-photo">

@@ -5,12 +5,7 @@ body.modal-open {
   background: linear-gradient(to bottom, rgb(203, 205, 248), white);
   padding: 10px;
 }
-.profile_button {
-  width: 44px;
-  height: 44px;
-  border-radius: 48px;
-  background-color: #6f35ff;
-}
+
 .profile_button-cover {
   display: flex;
   justify-content: flex-end;
@@ -42,7 +37,7 @@ body.modal-open {
   position: relative;
   margin: 10px;
   @media screen and (max-width: 400px) {
-    width: 300px;
+    width: 290px;
     height: 100%;
   }
 }
@@ -209,4 +204,7 @@ body.modal-open {
   @media screen and (max-width: 370px) {
     width: 120px;
   }
+}
+
+.partners-linkBtn {
 }
