@@ -11,8 +11,8 @@
   box-sizing: border-box;
 }
 .sms-input {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border: none;
   border-radius: 12px;
   text-align: center;
@@ -27,7 +27,7 @@
 }
 .sms-inputs {
   display: flex;
-  gap: 12px;
+  gap: 8px;
 }
 
 .submit-button {

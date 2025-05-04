@@ -34,22 +34,23 @@ body.modal-open {
 }
 .info-box {
   width: 351px;
-  height: 263px;
+  height: 270px;
   background-color: white;
   text-align: center;
   border-radius: 16px;
-  padding: 12px;
+  padding: 15px;
   position: relative;
+  margin: 10px;
   @media screen and (max-width: 400px) {
-    padding: 0;
     width: 300px;
     height: 100%;
   }
 }
 .info-box_card {
   display: flex;
-  justify-content: space-around;
-  padding-bottom: 10px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
 }
 .home-partners {
   display: flex;
