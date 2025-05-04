@@ -1,47 +1,97 @@
+.PhoneInput-container {
+  width: 100%;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
 .registerPage {
-    height: 100vh; /* Высота на весь экран */
-    width: 100vw;  /* Ширина на весь экран */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-
-    background: linear-gradient(135deg, #E5E6FA, #BABDFF);
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
+  height: 100vh;
 }
-.register-container {
-    padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
+.label {
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  color: rgba(13, 13, 13, 1);
 }
 
-input {
-    width: 234px;
-    height: 48px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+.phoneInput {
+  width: 234px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 1);
+  border: none;
+  outline: none;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.15);
+  margin-top: 10px;
+  margin-bottom: 20px;
+  &::placeholder {
+    color: rgba(13, 13, 13, 0.4);
+  }
 }
 
-button {
-    width: 223px;
-    height: 52px;
-    border: none;
-    border-radius: 12px;
-    background-color: #E9E9E9;
-    color: #A8A8A8;
-    font-weight: bold;
-    cursor: not-allowed;
+.PhoneInput-value {
+  position: relative;
 }
 
-button.button-active {
-    background-color: #8A2BE2; /* фиолетовый */
-    cursor: pointer;
+.phoneImg {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  width: 24px;
 }
-button.button-active {
-    background-color: #8A2BE2;     /* Фиолетовый фон */
-    color: white;                  /* Белый текст */
-    cursor: pointer;
+
+.phoneError {
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  top: 120%;
+  left: 0;
+}
+
+.register-logo-container {
+  display: flex;
+  justify-content: center;
+  width: 351px;
+  height: 294px;
+  margin: 20px auto;
+  @media screen and (max-width: 400px) {
+    width: 300px;
+    height: 250px;
+    margin: 20px auto;
+  }
+}
+.register-logo-container img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.register_name {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+.register_name_sms {
+  font-size: 13px;
+  width: 243px;
+  text-align: center;
+  margin: 0 auto 80px auto;
+}
+.register_button {
+  padding: 14px 62px;
+  border-radius: 12px;
+  border: none;
+  background: rgba(233, 233, 233, 1);
+  color: rgba(168, 168, 168, 1);
+}
+.button-active {
+  color: white;
+  background: rgba(44, 30, 79, 1);
 }

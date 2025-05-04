@@ -56,7 +56,9 @@ export default function MessagePage() {
             maxLength="1"
             className="sms-input"
             value={val}
+            placeholder="0"
             onChange={(e) => handleChange(i, e.target.value)}
+            type="number"
           />
         ))}
       </div>

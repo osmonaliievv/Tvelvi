@@ -18,8 +18,18 @@ import holdPhone from "../../assets/pngwing.com 1.svg";
 import minivan from "../../assets/image 70.svg";
 import like from "../../assets/image 71.svg";
 import study from "../../assets/image 73.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getCards } from "../../redux/slice/cardsSlice";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.cardsSlice);
+
+  useEffect(() => {
+    dispatch(getCards());
+  }, [dispatch]);
+  console.log(data);
+
   const [activeCategory, setActiveCategory] = useState("Приложения");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -33,7 +43,7 @@ export default function HomePage() {
   };
   const categories = ["Приложения", "Разработка сайтов", "Разработка игр"];
 
-  const data = {
+  const list = {
     Приложения: [
       {
         title: "Фудтех-приложение",
@@ -85,20 +95,104 @@ export default function HomePage() {
       },
     ],
     "Разработка сайтов": [
-      { title: "Фудтех-приложение1", image: foodtech_app },
-      { title: "Интернет-магазин", image: internet_marketplace },
-      { title: "Сервис бронирования", image: service_block },
-      { title: "Сервис доставки", image: service_delivery },
-      { title: "Приложение соцсети", image: messenger_app },
-      { title: "Приложение обучения", image: training_app },
+      {
+        title: "Фудтех-приложение",
+        image: foodtech_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "100 000",
+        image2: burgerPhoto,
+      },
+      {
+        title: "Интернет-магазин",
+        image: internet_marketplace,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "120 000",
+        image2: cart,
+      },
+      {
+        title: "Сервис бронирования",
+        image: service_block,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "110 000",
+        image2: holdPhone,
+      },
+      {
+        title: "Сервис доставки",
+        image: service_delivery,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "130 000",
+        image2: minivan,
+      },
+      {
+        title: "Приложение соцсети",
+        image: messenger_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "200 000",
+        image2: like,
+      },
+      {
+        title: "Приложение обучения",
+        image: training_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "150 000",
+        image2: study,
+      },
     ],
     "Разработка игр": [
-      { title: "Фудтех-приложение2", image: foodtech_app },
-      { title: "Интернет-магазин", image: internet_marketplace },
-      { title: "Сервис бронирования", image: service_block },
-      { title: "Сервис доставки", image: service_delivery },
-      { title: "Приложение соцсети", image: messenger_app },
-      { title: "Приложение обучения", image: training_app },
+      {
+        title: "Фудтех-приложение",
+        image: foodtech_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "100 000",
+        image2: burgerPhoto,
+      },
+      {
+        title: "Интернет-магазин",
+        image: internet_marketplace,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "120 000",
+        image2: cart,
+      },
+      {
+        title: "Сервис бронирования",
+        image: service_block,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "110 000",
+        image2: holdPhone,
+      },
+      {
+        title: "Сервис доставки",
+        image: service_delivery,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "130 000",
+        image2: minivan,
+      },
+      {
+        title: "Приложение соцсети",
+        image: messenger_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "200 000",
+        image2: like,
+      },
+      {
+        title: "Приложение обучения",
+        image: training_app,
+        description:
+          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
+        price: "150 000",
+        image2: study,
+      },
     ],
   };
 
@@ -116,50 +210,58 @@ export default function HomePage() {
 
   return (
     <div className="home-container">
-      <button onClick={handleClick2} className="profile_button">
-        <svg
-          width="26"
-          height="26"
-          viewBox="0 0 26 26"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <ellipse
-            cx="13"
-            cy="6.49996"
-            rx="4.33333"
-            ry="4.33333"
-            fill="white"
-          />
-          <path
-            d="M21.6666 18.9584C21.6666 21.6508 21.6666 23.8334 13 23.8334C4.33331 23.8334 4.33331 21.6508 4.33331 18.9584C4.33331 16.266 8.21351 14.0834 13 14.0834C17.7864 14.0834 21.6666 16.266 21.6666 18.9584Z"
-            fill="white"
-          />
-        </svg>
-      </button>
-      <img src={main_image} alt="" />
-      <div className="info-box">
-        <h3>
-          Создайте приложение под <br />
-          ваши задачи
-        </h3>
-        <p>
-          Выберите тип, добавьте функции и <br />
-          настройте под ваш бренд. Мы позаботимся о <br />
-          простоте разработки и успешном запуске!
-        </p>
-        <div className="info-box_card">
-          <div className="info-box_card__left">
-            <img src={left_card} alt="" />
-          </div>
-          <div className="info-box_card__center">
-            <img src={center_card} alt="" />
-          </div>
-          <div className="info-box_card__right">
-            <img src={right_card} alt="" />
+      <div className="profile_button-cover">
+        <button onClick={handleClick2} className="profile_button">
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <ellipse
+              cx="13"
+              cy="6.49996"
+              rx="4.33333"
+              ry="4.33333"
+              fill="white"
+            />
+            <path
+              d="M21.6666 18.9584C21.6666 21.6508 21.6666 23.8334 13 23.8334C4.33331 23.8334 4.33331 21.6508 4.33331 18.9584C4.33331 16.266 8.21351 14.0834 13 14.0834C17.7864 14.0834 21.6666 16.266 21.6666 18.9584Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div className="profile_main-photo">
+        <img src={main_image} alt="" />
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div className="info-box">
+          <h3>
+            Создайте приложение под <br />
+            ваши задачи
+          </h3>
+          <p>
+            Выберите тип, добавьте функции и <br />
+            настройте под ваш бренд. Мы позаботимся о <br />
+            простоте разработки и успешном запуске!
+          </p>
+          <div className="info-box_card">
+            <div className="info-box_card__left">
+              <img src={left_card} alt="" />
+            </div>
+            <div className="info-box_card__center">
+              <img src={center_card} alt="" />
+            </div>
+            <div className="info-box_card__right">
+              <img src={right_card} alt="" />
+            </div>
           </div>
         </div>
       </div>
+
       <div className="home-categories">
         <h2>Категории</h2>
         <div className="buttons-category">
@@ -172,6 +274,8 @@ export default function HomePage() {
                 backgroundColor:
                   activeCategory === category ? "#7B61FF" : "#FFFFFF",
                 color: activeCategory === category ? "#FFFFFF" : "#000000",
+                fontSize: "14px",
+                padding: "8px",
               }}
             >
               {category}
@@ -186,15 +290,15 @@ export default function HomePage() {
             gap: "24px",
           }}
         >
-          {data[activeCategory].map((item, index) => (
+          {list[activeCategory].map((item, index) => (
             <div
               key={index}
               style={{
-                width: "150px",
                 textAlign: "center",
                 cursor: "pointer",
               }}
               onClick={() => openModal(item)}
+              className="home-cardds"
             >
               <img
                 src={item.image}
@@ -263,6 +367,7 @@ export default function HomePage() {
             zIndex: 1000,
           }}
           onClick={closeModal}
+          className="modal-overlay"
         >
           <div
             style={{
@@ -270,12 +375,13 @@ export default function HomePage() {
               padding: "12px 14px",
               borderRadius: "12px",
             }}
+            className="modal-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+            <div className="Model_flex-text-img">
               <div>
                 <h3>{selectedItem.title}</h3>
-                <p style={{ width: "225px", fontSize: "12px" }}>
+                <p className="Model_flex-text-img__text">
                   {selectedItem.description}
                 </p>
               </div>
@@ -283,7 +389,7 @@ export default function HomePage() {
                 <img
                   src={selectedItem.image2}
                   alt={selectedItem.title}
-                  style={{ width: "94px", margin: "16px 0" }}
+                  className="Model_flex-text-img__img"
                 />
               </div>
             </div>

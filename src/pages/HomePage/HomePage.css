@@ -10,10 +10,27 @@ body.modal-open {
   height: 44px;
   border-radius: 48px;
   background-color: #6f35ff;
-  position: absolute;
-  top: 10px;
-  left: 320px;
-  z-index: 999;
+}
+.profile_button-cover {
+  display: flex;
+  justify-content: flex-end;
+}
+.profile_main-photo {
+  display: flex;
+  justify-content: center;
+  width: 351px;
+  height: 294px;
+  margin: 0 auto;
+  @media screen and (max-width: 400px) {
+    width: 300px;
+    height: 100%;
+  }
+}
+.profile_main-photo img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
 }
 .info-box {
   width: 351px;
@@ -25,12 +42,14 @@ body.modal-open {
   position: relative;
   @media screen and (max-width: 400px) {
     padding: 0;
+    width: 300px;
+    height: 100%;
   }
 }
 .info-box_card {
   display: flex;
-  gap: 8px;
-  padding-left: 10px;
+  justify-content: space-around;
+  padding-bottom: 10px;
 }
 .home-partners {
   display: flex;
@@ -65,13 +84,59 @@ body.modal-open {
   color: #000000;
   font-size: 16px;
   font-weight: 500;
+  @media screen and (max-width: 400px) {
+    padding: 0;
+  }
 }
-
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* @media screen and (max-width: 400px) {
+    padding: 20px;
+  } */
+}
+.modal-content {
+  background-color: white;
+  padding: 12px 14px;
+  border-radius: 12px;
+  @media screen and (max-width: 400px) {
+    width: 250px;
+  }
+}
+.Model_flex-text-img__text {
+  width: 225px;
+  font-size: 12px;
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
+}
+.Model_flex-text-img__img {
+  width: 94px;
+  height: 94px;
+  margin: 0 16px;
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
 .Model_flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  @media screen and (max-width: 400px) {
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
 .Model_price {
   font-size: 20px;
@@ -91,4 +156,56 @@ body.modal-open {
   color: white;
   padding: 8px 14px;
   background-color: rgba(111, 53, 255, 1);
+}
+.Model_flex-text-img {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  @media screen and (max-width: 400px) {
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+  }
+}
+.info-box_card__left {
+  @media screen and (max-width: 400px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+.info-box_card__left img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
+}
+.info-box_card__center {
+  @media screen and (max-width: 400px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+.info-box_card__center img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
+}
+.info-box_card__right {
+  @media screen and (max-width: 400px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+.info-box_card__right img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
+}
+.home-cardds {
+  width: 150px;
+  @media screen and (max-width: 370px) {
+    width: 120px;
+  }
 }
