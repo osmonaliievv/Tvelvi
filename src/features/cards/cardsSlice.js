@@ -16,6 +16,7 @@ export const fetchProducts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data); // Логируем ответ сервера
 
       return response.data; // Возвращаем данные продуктов
     } catch (error) {

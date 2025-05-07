@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Асинхронный thunk для отправки кода на номер телефона
 export const sendCode = createAsyncThunk(
   "auth/sendCode",
   async (phoneNumber, { rejectWithValue }) => {
@@ -19,7 +18,6 @@ export const sendCode = createAsyncThunk(
   }
 );
 
-// Асинхронный thunk для верификации кода
 export const verifyCode = createAsyncThunk(
   "auth/verifyCode",
   async ({ phone_number, code }, { rejectWithValue }) => {
@@ -37,13 +35,36 @@ export const verifyCode = createAsyncThunk(
   }
 );
 
+// ✅ Удаление аккаунта
+export const deleteAccount = createAsyncThunk(
+  "auth/deleteAccount",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const accessToken = localStorage.getItem("access_token");
+      const response = await axios.delete(
+        `http://localhost:8000/api/users/user/${userId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка при удалении аккаунта"
+      );
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     loading: false,
     error: "",
     success: false,
-    token: localStorage.getItem("access_token") || null, // Токен из localStorage
+    token: localStorage.getItem("access_token") || null,
   },
   reducers: {
     clearAuthState: (state) => {
@@ -51,8 +72,8 @@ const authSlice = createSlice({
       state.error = "";
       state.success = false;
       state.token = null;
-      localStorage.removeItem("access_token"); // Удаляем токен при выходе
-      localStorage.removeItem("refresh_token"); // Удаляем refresh_token при выходе
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
     },
   },
   extraReducers: (builder) => {
@@ -79,17 +100,27 @@ const authSlice = createSlice({
         const refreshToken = action.payload.refresh;
 
         if (accessToken) {
-          console.log("Сохранение access_token в localStorage", accessToken);
           localStorage.setItem("access_token", accessToken);
           state.token = accessToken;
         }
 
         if (refreshToken) {
-          console.log("Сохранение refresh_token в localStorage", refreshToken);
           localStorage.setItem("refresh_token", refreshToken);
         }
       })
       .addCase(verifyCode.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteAccount.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(deleteAccount.fulfilled, (state) => {
+        state.loading = false;
+        state.token = null;
+      })
+      .addCase(deleteAccount.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

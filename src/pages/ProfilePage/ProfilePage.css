@@ -1,5 +1,4 @@
 .profile-page {
-  height: 100vh; /* Высота на весь экран */
   width: 100vw; /* Ширина на весь экран */
   flex-direction: column;
   justify-content: center;
@@ -79,4 +78,8 @@
   width: 40px;
   height: 40px;
   border-radius: 100px;
+}
+.profile_phone_number {
+  font-size: 20px;
+  font-weight: 600;
 }

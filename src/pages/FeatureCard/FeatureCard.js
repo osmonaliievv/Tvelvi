@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import "./FeatureCard.css";
 
 const FeatureCard = ({
+  id,
   title,
   price,
   description,
   image,
   onPriceChange,
-  onCardSelect, // добавляем обработчик выбора карточки
+  onCardSelect,
   className = "",
-  key,
+  hint,
 }) => {
   const [isSelected, setIsSelected] = useState(false);
 
@@ -20,7 +22,14 @@ const FeatureCard = ({
 
     // передаем информацию о карточке в родительский компонент
     if (onCardSelect) {
-      onCardSelect({ id: key, card_name: title, price, description, image });
+      onCardSelect({
+        id: id,
+        card_name: title,
+        price,
+        description,
+        image,
+        hint,
+      }); // Включаем hint
     }
   };
 
@@ -33,19 +42,33 @@ const FeatureCard = ({
 
   return (
     <div
-      className={`feature-card ${className}`}
+      className={`feature-card ${className} ${isSelected ? "selected" : ""}`}
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
       role="checkbox"
       aria-checked={isSelected}
       tabIndex={0}
-      key={key}
+      key={id}
     >
       <div className="feature_content">
         <div className="feature_up">
           <div className="feature_left">
-            <div className="feature-price">
-              {(price || 0).toLocaleString()} ₽
+            <div className="feature_flex">
+              <div className="feature_priceHint">
+                <div className="feature-price">
+                  {(price || 0).toLocaleString()} ₽
+                </div>
+                <div className="feature-hint">{hint}</div>
+              </div>
+              {image && (
+                <div className="feature_image">
+                  {typeof image === "string" ? (
+                    <img src={image} alt={title} />
+                  ) : (
+                    image // Предполагается, что это JSX.Element
+                  )}
+                </div>
+              )}
             </div>
             <div className="feature-price-top">{title}</div>
           </div>

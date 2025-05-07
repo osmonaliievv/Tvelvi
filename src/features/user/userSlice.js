@@ -9,7 +9,7 @@ export const fetchUserProfile = createAsyncThunk(
     if (!token) return rejectWithValue("Токен не найден");
 
     try {
-      const response = await fetch("http://localhost:8000/api/users/me/", {
+      const response = await fetch("http://localhost:8000/api/users/user/", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -17,7 +17,7 @@ export const fetchUserProfile = createAsyncThunk(
         try {
           const newToken = await refreshAccessToken();
           const retryResponse = await fetch(
-            "http://localhost:8000/api/users/me/",
+            "http://localhost:8000/api/users/user/",
             {
               headers: { Authorization: `Bearer ${newToken}` },
             }

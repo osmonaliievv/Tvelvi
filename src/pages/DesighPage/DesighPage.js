@@ -1,44 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FeatureCard from "../FeatureCard/FeatureCard";
 import "./DesighPage.css";
-import icon_1 from "../../assets/Remove-bg.ai_1731875233067 1.svg";
-import icon_2 from "../../assets/Remove-bg.ai_1731887506469 1.svg";
-import icon_3 from "../../assets/Remove-bg.ai_1731888462468 1.svg";
 import { useNavigate } from "react-router-dom";
-const DesignPage = ({ onPriceChange }) => {
-  const features = [
-    {
-      title:
-        "Шаблонный дизайн. Стандартный, но профессиональный дизайн, простой адаптивный.",
-      price: 30000,
-      description: "Быстро и стильно — ваша среда в минималистичном дизайне!",
-      image: (
-        <img src={icon_1} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-    {
-      title:
-        "Кастомизированный дизайн. Настройка под фирменный стиль заказчика.",
-      price: 50000,
-      description: "Отдайте ваш бренд — дизайн, который запоминается клиентам.",
-      image: (
-        <img src={icon_2} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-    {
-      title:
-        "Уникальный дизайн с нуля. Полный дизайн-пакет с разработкой индивидуального стиля.",
-      price: 80000,
-      description: "Запомните ваш бренд — уникальный стиль привлечет внимание.",
-      image: (
-        <img src={icon_3} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-  ];
+import { fetchProducts } from "../../features/cards/cardsSlice";
+import {
+  addDesignCard,
+  removeDesignCard,
+  selectSelectedDesignCards,
+} from "../../features/selectedCards/selectedCardsSlice";
 
+const DesignPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.cards.products);
+  const status = useSelector((state) => state.cards.status);
+  const error = useSelector((state) => state.cards.error);
+  const selectedDesignCards = useSelector(selectSelectedDesignCards);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const designOptions = products
+    ? products.filter((card) => card.category === "design")
+    : [];
+
   const handleClick = () => {
-    navigate("/finalPrice"); // укажи нужный путь
+    navigate("/finalPrice");
+  };
+
+  const handleCardSelection = (card) => {
+    const isSelected = selectedDesignCards.some(
+      (selectedCard) => selectedCard.id === card.id
+    );
+    if (isSelected) {
+      dispatch(removeDesignCard(card));
+      if (onPriceChange) {
+        onPriceChange(-parseFloat(card.price));
+      }
+    } else {
+      dispatch(addDesignCard(card));
+      if (onPriceChange) {
+        onPriceChange(parseFloat(card.price));
+      }
+    }
   };
 
   return (
@@ -60,16 +66,23 @@ const DesignPage = ({ onPriceChange }) => {
       </div>
       <h2 className="page-title">Дизайн</h2>
       <div className="features-list">
-        {features.map((feature, index) => (
-          <FeatureCard
-            key={index}
-            title={feature.title}
-            price={feature.price}
-            description={feature.description}
-            image={feature.image}
-            onPriceChange={onPriceChange}
-          />
-        ))}
+        {status === "loading" && <p>Загрузка...</p>}
+        {status === "failed" && <p>Ошибка: {error}</p>}
+        {designOptions.length > 0
+          ? designOptions.map((card) => (
+              <FeatureCard
+                key={card.id}
+                id={card.id}
+                title={card.card_name}
+                description={card.description}
+                price={parseFloat(card.price)}
+                image={card.photo}
+                hint={card.hint}
+                onPriceChange={onPriceChange}
+                onCardSelect={handleCardSelection}
+              />
+            ))
+          : status === "succeeded" && <p>Нет опций дизайна для отображения.</p>}
       </div>
       <div className="fixed-button-container">
         <button onClick={handleClick} className="action-button">

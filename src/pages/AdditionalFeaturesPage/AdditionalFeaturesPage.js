@@ -1,54 +1,50 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FeatureCard from "../FeatureCard/FeatureCard";
-
-import icon_1 from "../../assets/image 73.svg";
-import icon_2 from "../../assets/image 77.svg";
-import icon_3 from "../../assets/image 78.svg";
 import { useNavigate } from "react-router-dom";
+import { fetchProducts } from "../../features/cards/cardsSlice";
+import {
+  addAdditionalCard,
+  removeAdditionalCard,
+  selectSelectedAdditionalCards,
+} from "../../features/selectedCards/selectedCardsSlice";
+
 const AdditionalFeaturesPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.cards.products);
+  const status = useSelector((state) => state.cards.status);
+  const error = useSelector((state) => state.cards.error);
+  const selectedAdditionalCards = useSelector(selectSelectedAdditionalCards);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const additionalFeatures = products
+    ? products.filter((card) => card.category === "additional")
+    : [];
+
   const handleClick = () => {
-    navigate("/designPage"); // укажи нужный путь
+    navigate("/designPage");
   };
-  const features = [
-    {
-      title:
-        "Удерживайте клиентов с помощью напоминаний — они будут возвращаться к вам!",
-      price: 15000,
-      description:
-        "Удерживайте клиентов с помощью напоминаний — они будут возвращаться к вам!",
-      image: (
-        <img src={icon_1} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-    {
-      title: "Повышаает user experience",
-      price: 10000,
-      description: "Поиск по каталогу",
-    },
-    {
-      title: "Упомяните клиентов получить ответ — это повышает лояльность",
-      price: 12000,
-      description: "Отзывы и рейтинг",
-      image: (
-        <img src={icon_2} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-    {
-      title: "Отслеживание курьеров — повышает уверенность клиентов и удобство",
-      price: 20000,
-      description:
-        "Геолокация и отслеживание. Отслеживание местоположения курьеров в реальном времени.",
-      image: <img src={icon_3} alt="" />,
-    },
-    {
-      title: "Сделайте оплату легкой и удобной — клиенты оценят удобство",
-      price: 30000,
-      description:
-        "Интеграция с платежными системами. Поддержка оплаты через банковские карты, электронные кошельки.",
-      image: <img src={icon_3} alt="" />,
-    },
-  ];
+
+  const handleCardSelection = (card) => {
+    const isSelected = selectedAdditionalCards.some(
+      (selectedCard) => selectedCard.id === card.id
+    );
+    if (isSelected) {
+      dispatch(removeAdditionalCard(card));
+      if (onPriceChange) {
+        onPriceChange(-parseFloat(card.price));
+      }
+    } else {
+      dispatch(addAdditionalCard(card));
+      if (onPriceChange) {
+        onPriceChange(parseFloat(card.price));
+      }
+    }
+  };
 
   return (
     <div className="page">
@@ -69,16 +65,25 @@ const AdditionalFeaturesPage = ({ onPriceChange }) => {
       </div>
       <h2 className="page-title">Дополнительные функции</h2>
       <div className="features-list">
-        {features.map((feature, index) => (
-          <FeatureCard
-            key={index}
-            title={feature.title}
-            price={feature.price}
-            description={feature.description}
-            image={feature.image}
-            onPriceChange={onPriceChange}
-          />
-        ))}
+        {status === "loading" && <p>Загрузка...</p>}
+        {status === "failed" && <p>Ошибка: {error}</p>}
+        {additionalFeatures.length > 0
+          ? additionalFeatures.map((card) => (
+              <FeatureCard
+                key={card.id}
+                id={card.id}
+                title={card.card_name}
+                description={card.description}
+                price={parseFloat(card.price)}
+                image={card.photo}
+                hint={card.hint}
+                onPriceChange={onPriceChange}
+                onCardSelect={handleCardSelection}
+              />
+            ))
+          : status === "succeeded" && (
+              <p>Нет дополнительных функций для отображения.</p>
+            )}
       </div>
       <div className="fixed-button-container">
         <button onClick={handleClick} className="action-button">
