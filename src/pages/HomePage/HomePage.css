@@ -145,6 +145,7 @@ body.modal-open {
   padding: 8px 14px;
   background-color: #fff;
   border: 1px rgba(111, 53, 255, 1) solid;
+  border-radius: 12px;
 }
 .Model_btn2 {
   width: 102px;
@@ -152,6 +153,8 @@ body.modal-open {
   color: white;
   padding: 8px 14px;
   background-color: rgba(111, 53, 255, 1);
+  border-radius: 12px;
+  border: none;
 }
 .Model_flex-text-img {
   display: flex;

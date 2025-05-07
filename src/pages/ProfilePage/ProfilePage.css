@@ -21,6 +21,12 @@
 }
 .profile_icon {
   margin-top: 71px;
+  width: 92px;
+  margin: 0 auto;
+}
+.profile_icon img {
+  margin-top: 71px;
+  width: 100%;
 }
 .order_btn {
   background-color: #2c1e4f;
@@ -53,4 +59,24 @@
   gap: 6px;
   border: none;
   color: #dd483a;
+}
+.card-item-small {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+}
+.card-items {
+  width: 320px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+}
+.card-item-small_btn {
+  background: inherit;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
 }

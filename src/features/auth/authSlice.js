@@ -1,19 +1,38 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const sendPhoneNumber = createAsyncThunk(
-  "auth/sendPhoneNumber",
+// Асинхронный thunk для отправки кода на номер телефона
+export const sendCode = createAsyncThunk(
+  "auth/sendCode",
   async (phoneNumber, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/users/send-code/",
-        {
-          phone_number: phoneNumber,
-        }
+        { phone_number: phoneNumber }
       );
       return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data || "Ошибка сервера");
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка при отправке кода"
+      );
+    }
+  }
+);
+
+// Асинхронный thunk для верификации кода
+export const verifyCode = createAsyncThunk(
+  "auth/verifyCode",
+  async ({ phone_number, code }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/users/verify-code/",
+        { phone_number, code }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.error || "Ошибка при верификации кода"
+      );
     }
   }
 );
@@ -21,30 +40,61 @@ export const sendPhoneNumber = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    phone: "",
-    status: null,
-    error: null,
+    loading: false,
+    error: "",
+    success: false,
+    token: localStorage.getItem("access_token") || null, // Токен из localStorage
   },
   reducers: {
-    setPhone(state, action) {
-      state.phone = action.payload;
+    clearAuthState: (state) => {
+      state.loading = false;
+      state.error = "";
+      state.success = false;
+      state.token = null;
+      localStorage.removeItem("access_token"); // Удаляем токен при выходе
+      localStorage.removeItem("refresh_token"); // Удаляем refresh_token при выходе
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(sendPhoneNumber.pending, (state) => {
-        state.status = "loading";
+      .addCase(sendCode.pending, (state) => {
+        state.loading = true;
+        state.error = "";
       })
-      .addCase(sendPhoneNumber.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.error = null;
+      .addCase(sendCode.fulfilled, (state) => {
+        state.loading = false;
       })
-      .addCase(sendPhoneNumber.rejected, (state, action) => {
-        state.status = "failed";
+      .addCase(sendCode.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(verifyCode.pending, (state) => {
+        state.loading = true;
+        state.error = "";
+      })
+      .addCase(verifyCode.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        const accessToken = action.payload.access || action.payload.token;
+        const refreshToken = action.payload.refresh;
+
+        if (accessToken) {
+          console.log("Сохранение access_token в localStorage", accessToken);
+          localStorage.setItem("access_token", accessToken);
+          state.token = accessToken;
+        }
+
+        if (refreshToken) {
+          console.log("Сохранение refresh_token в localStorage", refreshToken);
+          localStorage.setItem("refresh_token", refreshToken);
+        }
+      })
+      .addCase(verifyCode.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { setPhone } = authSlice.actions;
+export const { clearAuthState } = authSlice.actions;
 export default authSlice.reducer;

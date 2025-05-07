@@ -1,33 +1,49 @@
-// src/redux/cardsSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Создаем асинхронную функцию для получения данных с API
-export const fetchCards = createAsyncThunk("cards/fetchCards", async () => {
-  const response = await axios.get("http://localhost:8000/api/cards/");
-  return response.data;
-});
+// Асинхронный thunk для загрузки продуктов
+export const fetchProducts = createAsyncThunk(
+  "cards/fetchProducts",
+  async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        throw new Error("Access token not found in localStorage");
+      }
 
-// Инициализируем слайс
+      const response = await axios.get("http://localhost:8000/api/cards/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data; // Возвращаем данные продуктов
+    } catch (error) {
+      throw new Error(`Ошибка при запросе: ${error.message}`);
+    }
+  }
+);
+
+// Redux slice
 const cardsSlice = createSlice({
   name: "cards",
   initialState: {
-    products: [], // Массив для хранения данных о продуктах
-    status: "idle", // Состояние запроса (idle, loading, succeeded, failed)
-    error: null, // Ошибка, если есть
+    products: [],
+    status: "idle",
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCards.pending, (state) => {
-        state.status = "loading"; // Пока запрос в процессе
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(fetchCards.fulfilled, (state, action) => {
-        state.status = "succeeded"; // Когда запрос завершен успешно
-        state.products = action.payload; // Сохраняем данные о продуктах
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
       })
-      .addCase(fetchCards.rejected, (state, action) => {
-        state.status = "failed"; // Когда запрос завершен с ошибкой
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.error.message;
       });
   },

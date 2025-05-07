@@ -19,7 +19,6 @@ import minivan from "../../assets/image 70.svg";
 import like from "../../assets/image 71.svg";
 import study from "../../assets/image 73.svg";
 import profilesvg from "../../assets/Frame 193.svg";
-import ProductsList from "../../components/ProductsList";
 
 export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState("Приложения");
@@ -202,7 +201,6 @@ export default function HomePage() {
 
   return (
     <div className="home-container">
-      <ProductsList />
       <div className="profile_button-cover">
         <div onClick={handleClick2} className="profile_button">
           <img src={profilesvg} alt="" />

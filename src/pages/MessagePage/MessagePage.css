@@ -1,14 +1,35 @@
 .MessagePage {
-  max-width: 400px;
-  margin: 50px auto;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
+  width: 100wh;
+  height: 100vh;
+}
+.MessagePage-container {
+  margin: 0 auto;
   padding: 20px;
   text-align: center;
 }
+.MessagePage-logo {
+  display: flex;
+  justify-content: center;
+  width: 351px;
+  height: 294px;
+  margin: 0 auto;
+  @media screen and (max-width: 400px) {
+    width: 250px;
+    height: 100%;
+  }
+}
+.MessagePage-logo img {
+  @media screen and (max-width: 400px) {
+    width: 100%;
+    height: 100%;
+  }
+}
 
 .title {
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
 input[type="tel"] {
@@ -27,34 +48,47 @@ input[type="tel"] {
 }
 
 .codeInput {
-  width: 45px;
-  height: 50px;
+  width: 44px;
+  height: 48px;
   font-size: 24px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 8px;
+  @media screen and (max-width: 370px) {
+    width: 35px;
+    height: 40px;
+  }
 }
 
 .submitBtn {
-  padding: 12px 24px;
-  font-size: 16px;
-  background-color: #4caf50;
+  padding: 14px 62px;
+  border-radius: 12px;
   border: none;
-  border-radius: 8px;
+  background: rgba(44, 30, 79, 1);
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-.submitBtn:hover {
-  background-color: #45a049;
+  font-size: 16px;
 }
 
 .error {
   color: red;
   margin-bottom: 10px;
 }
-.success {
-  color: green;
-  margin-bottom: 10px;
+.subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+.timer {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 100px;
+  color: rgba(13, 13, 13, 0.4);
+}
+.timer span {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 100px;
+  color: black;
 }

@@ -1,67 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import FeatureCard from "../FeatureCard/FeatureCard";
-import icon_1 from "../../assets/image 79.svg";
-import icon_2 from "../../assets/image 80.svg";
-import icon_3 from "../../assets/freepik__background__70030 1.svg";
-import icon_4 from "../../assets/image 72.svg";
 import "./BasicFeaturesPage.css";
 import { useNavigate } from "react-router-dom";
+import { fetchProducts } from "../../features/cards/cardsSlice";
+
 const BasicFeaturesPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/additionalFeaturesPage"); // укажи нужный путь
+  const dispatch = useDispatch();
+
+  const products = useSelector((state) => state.cards.products);
+  const status = useSelector((state) => state.cards.status);
+  const error = useSelector((state) => state.cards.error);
+
+  const [selectedCards, setSelectedCards] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // Маппим все карточки из всех объектов и фильтруем по категории "basic"
+  const basicCards = products.flatMap((product) =>
+    product.cards.filter((card) => card.category === "basic")
+  );
+
+  const handleCardSelection = (card) => {
+    setSelectedCards((prevSelected) => {
+      if (prevSelected.find((selectedCard) => selectedCard.id === card.id)) {
+        return prevSelected.filter(
+          (selectedCard) => selectedCard.id !== card.id
+        );
+      } else {
+        return [...prevSelected, card];
+      }
+    });
   };
 
-  const features = [
-    {
-      title:
-        "Лёгкий вход для ваших клиентов — повышение конверсии и лояльности.",
-      price: 15000,
-      title2: "Регистрация и авторизация",
-      description:
-        "Функция позволяет пользователям регистрироваться и входить через почту, соцсети или номер телефона.",
-      image: (
-        <img src={icon_1} alt="Лёгкий вход" className="feature-image-img" />
-      ),
-    },
-    {
-      title:
-        "Каждый профиль помогает лучше узнать потребности клиента и удивить его.",
-      price: 10000,
-      title2: "Профили пользователя",
-      description:
-        " Позволяет пользователям настраивать свои данные, загрузить фото и контактную информацию.",
-      image: (
-        <img
-          src={icon_2}
-          alt="Профили пользователя"
-          className="feature-image-img"
-        />
-      ),
-    },
-    {
-      title: "Легкий доступ к важной информации — повышает оценку удобства",
-      price: 10000,
-      title2: "Навигация и главная страница",
-      description:
-        "Интуитивная система навигации и понятный главный экран с быстрым доступом к основным функциям.",
-      image: <img src={icon_3} alt="Навигация" className="feature-image-img" />,
-    },
-    {
-      title: "Ваши клиенты будут оформлять заказы быстрее и с удобством",
-      price: 15000,
-      title2: "Оформление заказов",
-      description:
-        "Позволяет пользователям быстро и удобно оформлять заказы через приложение.",
-      image: (
-        <img
-          src={icon_4}
-          alt="Оформление заказов"
-          className="feature-image-img"
-        />
-      ),
-    },
-  ];
+  const handleClick = () => {
+    navigate("/additionalFeaturesPage");
+    // передаем выбранные карточки на следующую страницу
+    // например, можно сохранять их в Redux или передать через props
+  };
+  console.log("Selected cards:", selectedCards);
+  console.log("Basic cards:", products);
 
   return (
     <div className="page">
@@ -77,20 +58,38 @@ const BasicFeaturesPage = ({ onPriceChange }) => {
         <span></span>
         <div onClick={() => navigate("/finalPrice")}></div>
       </div>
+
       <h2 className="page-title">Базовые функции</h2>
+
       <div className="features-list">
-        {features.map((feature, index) => (
-          <FeatureCard
-            key={index}
-            title={feature.title}
-            price={feature.price}
-            title2={feature.title2}
-            description={feature.description}
-            image={feature.image}
-            onPriceChange={onPriceChange}
-          />
-        ))}
+        {status === "loading" && <p>Загрузка...</p>}
+        {status === "failed" && <p>Ошибка: {error}</p>}
+
+        {/* Отображаем только карточки с категорией "basic" */}
+        {basicCards.length > 0 &&
+          basicCards.map((card) => (
+            <FeatureCard
+              key={card.id}
+              title={card.card_name}
+              description={card.description}
+              price={parseFloat(card.price)}
+              image={
+                card.image_url ? (
+                  <img
+                    src={card.image_url}
+                    alt={card.card_name}
+                    className="feature-image-img"
+                  />
+                ) : (
+                  <div className="placeholder-image">No Image</div>
+                )
+              }
+              onPriceChange={onPriceChange}
+              onCardSelect={handleCardSelection} // передаем функцию выбора карточки
+            />
+          ))}
       </div>
+
       <div className="fixed-button-container">
         <button onClick={handleClick} className="action-button">
           Готово
