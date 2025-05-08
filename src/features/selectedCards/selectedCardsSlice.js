@@ -1,18 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { refreshAccessToken } from "../../features/utils/refreshToken"; // Убедитесь, что путь корректный
 
-// Асинхронная функция для отправки данных заказа (PUT запрос)
+// Асинхронная функция для отправки данных заказа (POST запрос)
 export const sendOrderData = createAsyncThunk(
   "selectedCards/sendOrderData",
-  async ({ orderId, orderData }, { rejectWithValue }) => {
+  async (orderData, { rejectWithValue }) => {
+    // Убрали orderId из аргументов
     const token = localStorage.getItem("access_token");
     if (!token) return rejectWithValue("Токен не найден");
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/orders/${orderId}/`, // Используйте правильный URL вашего API
+        `http://localhost:8000/api/orders/`, // Изменили URL, убрали ${orderId}
         {
-          method: "PUT",
+          method: "POST", // Изменили метод на POST
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -25,9 +26,9 @@ export const sendOrderData = createAsyncThunk(
         try {
           const newToken = await refreshAccessToken();
           const retryResponse = await fetch(
-            `http://localhost:8000/api/orders/${orderId}/`, // Используйте правильный URL вашего API
+            `http://localhost:8000/api/orders/`, // Изменили URL и здесь
             {
-              method: "PUT",
+              method: "POST", // Изменили метод и здесь
               headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${newToken}`,
@@ -40,6 +41,7 @@ export const sendOrderData = createAsyncThunk(
             return rejectWithValue(errorData);
           }
           const data = await retryResponse.json();
+          console.log("Данные успешно отправлены (retry):", data);
           return data;
         } catch (error) {
           window.location.href = "/";
@@ -53,6 +55,7 @@ export const sendOrderData = createAsyncThunk(
       }
 
       const data = await response.json();
+      console.log("Данные успешно отправлены:", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -108,10 +111,6 @@ const selectedCardsSlice = createSlice({
       })
       .addCase(sendOrderData.fulfilled, (state, action) => {
         state.sendOrderStatus = "succeeded";
-        // Можно добавить логику очистки выбранных карточек при успехе, если нужно
-        // state.selectedBasic = [];
-        // state.selectedAdditional = [];
-        // state.selectedDesign = [];
       })
       .addCase(sendOrderData.rejected, (state, action) => {
         state.sendOrderStatus = "failed";

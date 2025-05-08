@@ -1,25 +1,58 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./FinalPricePage.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectSelectedBasicCards,
   selectSelectedAdditionalCards,
   selectSelectedDesignCards,
+  sendOrderData,
+  selectSendOrderStatus,
+  selectSendOrderError,
+  clearSelectedCards, // Опционально
 } from "../../features/selectedCards/selectedCardsSlice";
 
 const FinalPricePage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const selectedBasic = useSelector(selectSelectedBasicCards);
   const selectedAdditional = useSelector(selectSelectedAdditionalCards);
   const selectedDesign = useSelector(selectSelectedDesignCards);
+  const sendOrderStatus = useSelector(selectSendOrderStatus);
+  const sendOrderError = useSelector(selectSendOrderError);
 
-  // Рассчитываем общую стоимость
-  const totalPrice = [
-    ...selectedBasic,
-    ...selectedAdditional,
-    ...selectedDesign,
-  ].reduce((sum, card) => sum + parseFloat(card.price || 0), 0);
+  const handleGoToPayment = async () => {
+    // 1. Подготовьте данные заказа (массив ID выбранных карт)
+    const selectedCardIds = [
+      ...selectedBasic.map((card) => card.id),
+      ...selectedAdditional.map((card) => card.id),
+      ...selectedDesign.map((card) => card.id),
+    ];
+
+    if (selectedCardIds.length === 0) {
+      alert("Пожалуйста, выберите товары для заказа.");
+      return;
+    }
+
+    const orderData = {
+      selected_cards: selectedCardIds, // Отправляем массив ID выбранных карт
+    };
+
+    console.log("Данные заказа перед отправкой:", orderData); // Проверяем, что отправляем массив ID
+
+    // 2. Отправьте данные заказа
+    const result = await dispatch(sendOrderData(orderData));
+
+    // 3. Обработайте результат отправки
+    if (sendOrderData.fulfilled.match(result)) {
+      console.log("Заказ успешно отправлен:", result.payload);
+      dispatch(clearSelectedCards()); // Опционально
+      navigate("/successfully/");
+    } else if (sendOrderData.rejected.match(result)) {
+      console.error("Ошибка при отправке заказа:", result.payload);
+      alert(`Ошибка при оформлении заказа: ${result.payload}`);
+    }
+  };
 
   return (
     <div className="page">
@@ -119,12 +152,21 @@ const FinalPricePage = () => {
 
         <div className="priceAndButton">
           <div className="finalPrice">
-            Итого: {totalPrice.toLocaleString()} ₽
+            Итого:{" "}
+            {[...selectedBasic, ...selectedAdditional, ...selectedDesign]
+              .reduce((sum, card) => sum + parseFloat(card.price || 0), 0)
+              .toLocaleString()}{" "}
+            ₽
           </div>
           <div className="final-price-buttonCover">
+            {sendOrderStatus === "loading" && <p>Отправка заказа...</p>}
+            {sendOrderError && (
+              <p style={{ color: "red" }}>Ошибка: {sendOrderError}</p>
+            )}
             <button
               className="final-price-buttonn"
-              onClick={() => navigate("/successfully/")}
+              onClick={handleGoToPayment}
+              disabled={sendOrderStatus === "loading"}
             >
               Перейти к оплате
             </button>
