@@ -75,69 +75,75 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-page">
-      <div className="text-center relative">
-        <button onClick={() => navigate("/home")} className="back_btn">
-          Назад
-        </button>
-        <div className="flex flex-col items-center mt-10">
-          <div className="profile_icon">
-            <img
-              src={profileIcon}
-              alt="profile"
-              className="w-20 h-20 rounded-full border-2 border-white"
-            />
-          </div>
-          <h2 className="text-xl font-semibold mt-4">Мой профиль</h2>
-          {profile && (
-            <p className="profile_phone_number">
-              {formatPhoneNumber(profile.phone_number)}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {orders && Array.isArray(orders) && orders.length > 0 ? (
-        <div className="orders-list">
-          <div>
-            {orders.map((order) => (
-              <div key={order.id} className="order-item">
-                <div>Заказ № {order.id}</div>
-                <p style={{ color: "black" }}>Статус: {order.status_display}</p>
-                {order.cards &&
-                order.cards.length >
-                  0 ? // Ты можешь добавить сюда любую информацию, которую ты хочешь отображать о заказе, // Если у заказа есть карточки (ранее ты их отображал здесь)
-                // если у него есть карточки.
-                null : (
-                  // Если у заказа нет карточек, отображаем сообщение и кнопку "Заказать!"
-                  <div className="flex flex-col items-center mt-10">
-                    <p className="text-center text-base text-black font-medium mb-6">
-                      В этом заказе пока нет деталей.
-                    </p>
-                    <button
-                      onClick={() => navigate("/basicFeaturesPage")}
-                      className="order_btn"
-                    >
-                      Заказать!
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : status === "succeeded" ? (
-        <div className="flex flex-col items-center mt-10">
-          <p className="text-center text-base text-black font-medium mb-6">
-            У вас пока нет заказов.
-          </p>
-          <button
-            onClick={() => navigate("/basicFeaturesPage")}
-            className="order_btn"
-          >
-            Заказать!
+      <div className="profile-content">
+        {" "}
+        {/* Обертка для верхнего контента */}
+        <div className="text-center relative">
+          <button onClick={() => navigate("/home")} className="back_btn">
+            Назад
           </button>
+          <div className="flex flex-col items-center mt-10">
+            <div className="profile_icon">
+              <img
+                src={profileIcon}
+                alt="profile"
+                className="w-20 h-20 rounded-full border-2 border-white"
+              />
+            </div>
+            <h2 className="text-xl font-semibold mt-4">Мой профиль</h2>
+            {profile && (
+              <p className="profile_phone_number">
+                {formatPhoneNumber(profile.phone_number)}
+              </p>
+            )}
+          </div>
         </div>
-      ) : null}
+        {orders && Array.isArray(orders) && orders.length > 0 ? (
+          <div className="orders-list">
+            <div>
+              {orders.map((order) => (
+                <div key={order.id} className="order-item">
+                  <div className="card-items">
+                    <div className="cards_id_status">
+                      <div className="cards_id">Заказ № {order.id}</div>
+                      <p className="cards_status">
+                        Статус: {order.status_display}
+                      </p>
+                    </div>
+                    <img src={goIcon} alt={goIcon} />
+                  </div>
+
+                  {order.cards && order.cards.length > 0 ? null : (
+                    <div className="flex flex-col items-center mt-10">
+                      <p className="text-center text-base text-black font-medium mb-6">
+                        В этом заказе пока нет деталей.
+                      </p>
+                      <button
+                        onClick={() => navigate("/basicFeaturesPage")}
+                        className="order_btn"
+                      >
+                        Заказать!
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : status === "succeeded" ? (
+          <div className="flex flex-col items-center mt-10">
+            <p className="text-center text-base text-black font-medium mb-6">
+              У вас пока нет заказов.
+            </p>
+            <button
+              onClick={() => navigate("/basicFeaturesPage")}
+              className="order_btn"
+            >
+              Заказать!
+            </button>
+          </div>
+        ) : null}
+      </div>
 
       <div className="bottom_btn">
         <button onClick={handleLogout} className="exit_btn">

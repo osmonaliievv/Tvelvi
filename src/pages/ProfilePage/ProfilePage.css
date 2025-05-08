@@ -1,12 +1,20 @@
 .profile-page {
-  width: 100vw; /* Ширина на весь экран */
+  width: 100vw;
   flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  min-height: 100vh; /* Занимаем всю высоту экрана */
   background: linear-gradient(to bottom, rgb(192, 194, 248), white);
   box-sizing: border-box;
+  text-align: center;
 }
+
+.profile-content {
+  flex-grow: 1; /* Занимаем доступное вертикальное пространство */
+  padding: 20px; /* Добавьте отступы для верхнего контента */
+}
+
+/* Остальные стили без изменений */
+
 .back_btn {
   background-color: white;
   width: 71px;
@@ -18,15 +26,18 @@
   position: absolute;
   border: none;
 }
+
 .profile_icon {
   margin-top: 71px;
   width: 92px;
   margin: 0 auto;
 }
+
 .profile_icon img {
   margin-top: 71px;
   width: 100%;
 }
+
 .order_btn {
   background-color: #2c1e4f;
   width: 181px;
@@ -34,11 +45,19 @@
   border-radius: 12px;
   color: white;
 }
+
 .bottom_btn {
   display: flex;
   justify-content: space-between;
-  margin-top: 72px;
+  position: fixed; /* Фиксируем положение */
+  bottom: 0; /* Прижимаем к низу */
+  left: 0; /* Растягиваем по ширине */
+  right: 0; /* Растягиваем по ширине */
+  background-color: white; /* Добавляем фон */
+  padding: 20px;
+  box-sizing: border-box;
 }
+
 .exit_btn {
   width: 73px;
   height: 22px;
@@ -49,6 +68,7 @@
   color: #0d0d0d;
   border: none;
 }
+
 .delete_btn {
   width: 153px;
   height: 22px;
@@ -59,6 +79,7 @@
   border: none;
   color: #dd483a;
 }
+
 .card-item-small {
   display: flex;
   justify-content: space-between;
@@ -66,12 +87,18 @@
   margin-bottom: 12px;
   padding: 12px 16px;
 }
+
 .card-items {
   width: 320px;
   margin: 0 auto;
   background: white;
   border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
 }
+
 .card-item-small_btn {
   background: inherit;
   border: none;
@@ -79,7 +106,27 @@
   height: 40px;
   border-radius: 100px;
 }
+
 .profile_phone_number {
   font-size: 20px;
+  font-weight: 600;
+}
+
+.cards_status {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(13, 13, 13, 0.3);
+}
+
+.cards_id_status {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cards_id {
+  font-size: 18px;
   font-weight: 600;
 }
