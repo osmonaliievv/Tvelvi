@@ -10,7 +10,6 @@
 
 .profile-content {
   flex-grow: 1; /* Занимаем доступное вертикальное пространство */
-  padding: 20px; /* Добавьте отступы для верхнего контента */
 }
 
 /* Остальные стили без изменений */
@@ -89,8 +88,6 @@
 }
 
 .card-items {
-  width: 320px;
-  margin: 0 auto;
   background: white;
   border-radius: 16px;
   display: flex;
@@ -98,7 +95,13 @@
   align-items: center;
   padding: 12px;
 }
-
+.cards-cover {
+  width: 300px;
+  margin: 0 auto;
+  @media screen and (max-width: 375px) {
+    width: 280px;
+  }
+}
 .card-item-small_btn {
   background: inherit;
   border: none;

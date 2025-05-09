@@ -103,14 +103,16 @@ const ProfilePage = () => {
             <div>
               {orders.map((order) => (
                 <div key={order.id} className="order-item">
-                  <div className="card-items">
-                    <div className="cards_id_status">
-                      <div className="cards_id">Заказ № {order.id}</div>
-                      <p className="cards_status">
-                        Статус: {order.status_display}
-                      </p>
+                  <div className="cards-cover">
+                    <div className="card-items">
+                      <div className="cards_id_status">
+                        <div className="cards_id">Заказ № {order.id}</div>
+                        <p className="cards_status">
+                          Статус: {order.status_display}
+                        </p>
+                      </div>
+                      <img src={goIcon} alt={goIcon} />
                     </div>
-                    <img src={goIcon} alt={goIcon} />
                   </div>
 
                   {order.cards && order.cards.length > 0 ? null : (
