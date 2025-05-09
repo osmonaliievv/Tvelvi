@@ -6,7 +6,7 @@ export const sendCode = createAsyncThunk(
   async (phoneNumber, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/users/send-code/",
+        "https://api.tvelvi.ru/api/users/send-code/",
         { phone_number: phoneNumber }
       );
       return response.data;
@@ -23,7 +23,7 @@ export const verifyCode = createAsyncThunk(
   async ({ phone_number, code }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/users/verify-code/",
+        "https://api.tvelvi.ru/api/users/verify-code/",
         { phone_number, code }
       );
       return response.data;
@@ -42,7 +42,7 @@ export const deleteAccount = createAsyncThunk(
     try {
       const accessToken = localStorage.getItem("access_token");
       const response = await axios.delete(
-        `http://localhost:8000/api/users/user/${userId}/`,
+        `https://api.tvelvi.ru/api/users/user/${userId}/`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,

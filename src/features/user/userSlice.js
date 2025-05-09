@@ -9,7 +9,7 @@ export const fetchUserProfile = createAsyncThunk(
     if (!token) return rejectWithValue("Токен не найден");
 
     try {
-      const response = await fetch("http://localhost:8000/api/users/user/", {
+      const response = await fetch("https://api.tvelvi.ru/api/users/user/", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -17,7 +17,7 @@ export const fetchUserProfile = createAsyncThunk(
         try {
           const newToken = await refreshAccessToken();
           const retryResponse = await fetch(
-            "http://localhost:8000/api/users/user/",
+            "https://api.tvelvi.ru/api/users/user/",
             {
               headers: { Authorization: `Bearer ${newToken}` },
             }
@@ -52,7 +52,7 @@ export const fetchUserOrders = createAsyncThunk(
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/users/my_orders/",
+        "https://api.tvelvi.ru/api/users/my_orders/",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -63,7 +63,7 @@ export const fetchUserOrders = createAsyncThunk(
           // Попробуем обновить access токен через refresh токен
           const newToken = await refreshAccessToken();
           const retryResponse = await fetch(
-            "http://localhost:8000/api/users/my_orders/",
+            "https://api.tvelvi.ru/api/users/my_orders/",
             {
               headers: { Authorization: `Bearer ${newToken}` },
             }
