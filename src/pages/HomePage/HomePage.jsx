@@ -1,30 +1,90 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+// Импортируем синхронные экшены из нашего Redux Slice
+import {
+  fetchCategoriesStart,
+  fetchCategoriesSuccess,
+  fetchCategoriesFailure,
+} from "../../features/products/categoriesSlice";
+
 import "./HomePage.css";
 import left_card from "../../assets/Frame 168.svg";
 import center_card from "../../assets/Frame 169.svg";
 import right_card from "../../assets/Frame 170.svg";
-import foodtech_app from "../../assets/Frame 208.svg";
-import internet_marketplace from "../../assets/Frame 209.svg";
-import service_block from "../../assets/Frame 210.svg";
-import service_delivery from "../../assets/Frame 211.svg";
-import messenger_app from "../../assets/Frame 212.svg";
-import training_app from "../../assets/Frame 213.svg";
-import img_partners from "../../assets/Remove-bg.ai_1732383936587 1.svg";
-import main_image from "../../assets/Black.svg";
-import { useNavigate } from "react-router-dom";
+
+// Локальные импорты изображений для карточек
 import burgerPhoto from "../../assets/image 69.svg";
 import cart from "../../assets/image 72.svg";
 import holdPhone from "../../assets/pngwing.com 1.svg";
 import minivan from "../../assets/image 70.svg";
 import like from "../../assets/image 71.svg";
 import study from "../../assets/image 73.svg";
+
+import img_partners from "../../assets/Remove-bg.ai_1732383936587 1.svg";
+import main_image from "../../assets/Black.svg";
+import { useNavigate } from "react-router-dom";
 import profilesvg from "../../assets/Frame 193.svg";
 
 export default function HomePage() {
-  const [activeCategory, setActiveCategory] = useState("Приложения");
+  const dispatch = useDispatch();
+  const {
+    items: categoriesData,
+    status,
+    error,
+  } = useSelector((state) => state.categories);
+
+  const [activeCategory, setActiveCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+
+  // Логика получения данных теперь здесь, внутри useEffect
+  useEffect(() => {
+    // Проверяем статус, чтобы не делать повторные запросы
+    if (status === "idle") {
+      const getCategories = () => {
+        // Диспатчим экшен начала загрузки
+        dispatch(fetchCategoriesStart());
+
+        // Используем fetch для получения данных
+        fetch("https://api.tvelvi.ru/api/section/")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                `Ошибка HTTP: ${response.status} - ${response.statusText}`
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // При успешном получении данных, диспатчим экшен успеха с данными
+            dispatch(fetchCategoriesSuccess(data));
+          })
+          .catch((error) => {
+            // При ошибке, диспатчим экшен ошибки
+            console.error("Ошибка при получении категорий:", error);
+            dispatch(
+              fetchCategoriesFailure(
+                error.message || "Произошла неизвестная ошибка."
+              )
+            );
+          });
+      };
+
+      getCategories(); // Вызываем функцию получения данных
+    }
+  }, [status, dispatch]); // Зависимости: status и dispatch
+
+  // Устанавливаем активную категорию по умолчанию после загрузки данных
+  useEffect(() => {
+    if (
+      status === "succeeded" &&
+      categoriesData.length > 0 &&
+      activeCategory === ""
+    ) {
+      setActiveCategory(categoriesData[0].name);
+    }
+  }, [status, categoriesData, activeCategory]);
 
   const handleClickForPartners = () => {
     navigate("/partners");
@@ -32,185 +92,54 @@ export default function HomePage() {
   const handleClick2 = () => {
     navigate("/profile");
   };
-  const categories = ["Приложения", "Разработка сайтов", "Разработка игр"];
 
-  const list = {
-    Приложения: [
-      {
-        title: "Фудтех-приложение",
-        image: foodtech_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "100 000",
-        image2: burgerPhoto,
-      },
-      {
-        title: "Интернет-магазин",
-        image: internet_marketplace,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "120 000",
-        image2: cart,
-      },
-      {
-        title: "Сервис бронирования",
-        image: service_block,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "110 000",
-        image2: holdPhone,
-      },
-      {
-        title: "Сервис доставки",
-        image: service_delivery,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "130 000",
-        image2: minivan,
-      },
-      {
-        title: "Приложение соцсети",
-        image: messenger_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "200 000",
-        image2: like,
-      },
-      {
-        title: "Приложение обучения",
-        image: training_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "150 000",
-        image2: study,
-      },
-    ],
-    "Разработка сайтов": [
-      {
-        title: "Фудтех-приложение",
-        image: foodtech_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "100 000",
-        image2: burgerPhoto,
-      },
-      {
-        title: "Интернет-магазин",
-        image: internet_marketplace,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "120 000",
-        image2: cart,
-      },
-      {
-        title: "Сервис бронирования",
-        image: service_block,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "110 000",
-        image2: holdPhone,
-      },
-      {
-        title: "Сервис доставки",
-        image: service_delivery,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "130 000",
-        image2: minivan,
-      },
-      {
-        title: "Приложение соцсети",
-        image: messenger_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "200 000",
-        image2: like,
-      },
-      {
-        title: "Приложение обучения",
-        image: training_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "150 000",
-        image2: study,
-      },
-    ],
-    "Разработка игр": [
-      {
-        title: "Фудтех-приложение",
-        image: foodtech_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "100 000",
-        image2: burgerPhoto,
-      },
-      {
-        title: "Интернет-магазин",
-        image: internet_marketplace,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "120 000",
-        image2: cart,
-      },
-      {
-        title: "Сервис бронирования",
-        image: service_block,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "110 000",
-        image2: holdPhone,
-      },
-      {
-        title: "Сервис доставки",
-        image: service_delivery,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "130 000",
-        image2: minivan,
-      },
-      {
-        title: "Приложение соцсети",
-        image: messenger_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "200 000",
-        image2: like,
-      },
-      {
-        title: "Приложение обучения",
-        image: training_app,
-        description:
-          "Полный набор функций для работы с заказами на доставку. Подходит для ресторанов, сервисов по доставке готовой еды или продуктов.",
-        price: "150 000",
-        image2: study,
-      },
-    ],
-  };
+  const currentCategoryItems =
+    categoriesData.find((category) => category.name === activeCategory)
+      ?.cards || [];
 
   const openModal = (item) => {
     setSelectedItem(item);
     setIsModalOpen(true);
-    document.body.classList.add("modal-open"); // Добавляем класс к body
+    document.body.classList.add("modal-open");
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
-    document.body.classList.remove("modal-open"); // Удаляем класс с body
+    document.body.classList.remove("modal-open");
   };
+
+  // Отображаем состояние загрузки
+  if (status === "loading") {
+    return <div className="loading-state">Загрузка категорий...</div>;
+  }
+
+  // Отображаем состояние ошибки
+  if (status === "failed") {
+    return (
+      <div className="error-state">
+        Ошибка загрузки данных: {error}. Пожалуйста, попробуйте еще раз.
+      </div>
+    );
+  }
+
+  // Если данные успешно загружены, но categoriesData пуста
+  if (status === "succeeded" && categoriesData.length === 0) {
+    return <div className="no-data-state">Нет доступных категорий.</div>;
+  }
 
   return (
     <div className="home-container">
       <div className="profile_button-cover">
         <div onClick={handleClick2} className="profile_button">
-          <img src={profilesvg} alt="" />
+          <img src={profilesvg} alt="Профиль" />
         </div>
       </div>
 
       <div className="profile_main-photo">
-        <img src={main_image} alt="" />
+        <img src={main_image} alt="Главное изображение" />
       </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className="home-info-cover">
         <div className="info-box">
           <h3>
             Создайте приложение под <br />
@@ -238,20 +167,20 @@ export default function HomePage() {
       <div className="home-categories">
         <h2>Категории</h2>
         <div className="buttons-category">
-          {categories.map((category) => (
+          {categoriesData.map((category) => (
             <button
               className="category-button"
-              key={category}
-              onClick={() => setActiveCategory(category)}
+              key={category.id}
+              onClick={() => setActiveCategory(category.name)}
               style={{
                 backgroundColor:
-                  activeCategory === category ? "#7B61FF" : "#FFFFFF",
-                color: activeCategory === category ? "#FFFFFF" : "#000000",
+                  activeCategory === category.name ? "#7B61FF" : "#FFFFFF",
+                color: activeCategory === category.name ? "#FFFFFF" : "#000000",
                 fontSize: "14px",
                 padding: "8px",
               }}
             >
-              {category}
+              {category.name}
             </button>
           ))}
         </div>
@@ -263,9 +192,9 @@ export default function HomePage() {
             gap: "24px",
           }}
         >
-          {list[activeCategory].map((item, index) => (
+          {currentCategoryItems.map((item) => (
             <div
-              key={index}
+              key={item.id}
               style={{
                 textAlign: "center",
                 cursor: "pointer",
@@ -274,7 +203,7 @@ export default function HomePage() {
               className="home-cardds"
             >
               <img
-                src={item.image}
+                src={item.image || burgerPhoto}
                 alt={item.title}
                 style={{
                   width: "100%",
@@ -360,7 +289,7 @@ export default function HomePage() {
               </div>
               <div>
                 <img
-                  src={selectedItem.image2}
+                  src={selectedItem.image || burgerPhoto}
                   alt={selectedItem.title}
                   className="Model_flex-text-img__img"
                 />

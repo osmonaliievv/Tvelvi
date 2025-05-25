@@ -7,7 +7,9 @@ export const sendCode = createAsyncThunk(
     try {
       const response = await axios.post(
         "https://api.tvelvi.ru/api/users/send-code/",
-        { phone_number: phoneNumber }
+        {
+          phone_number: phoneNumber,
+        }
       );
       return response.data;
     } catch (error) {
@@ -24,7 +26,10 @@ export const verifyCode = createAsyncThunk(
     try {
       const response = await axios.post(
         "https://api.tvelvi.ru/api/users/verify-code/",
-        { phone_number, code }
+        {
+          phone_number,
+          code,
+        }
       );
       return response.data;
     } catch (error) {

@@ -24,7 +24,6 @@ const RegisterPage = () => {
     const resultAction = await dispatch(sendCode(cleanPhone));
 
     if (sendCode.fulfilled.match(resultAction)) {
-      alert("Код отправлен на номер телефона.");
       navigate("/message", { state: { phone_number: phone } });
     }
   };

@@ -11,7 +11,7 @@ export const sendOrderData = createAsyncThunk(
 
     try {
       const response = await fetch(
-        `https://api.tvelvi.ru/api/orders/`, // Изменили URL, убрали ${orderId}
+        `https://api.tvelvi.ru/api/api/orders/`, // Изменили URL, убрали ${orderId}
         {
           method: "POST", // Изменили метод на POST
           headers: {
@@ -26,7 +26,7 @@ export const sendOrderData = createAsyncThunk(
         try {
           const newToken = await refreshAccessToken();
           const retryResponse = await fetch(
-            `https://api.tvelvi.ru/api/orders/`, // Изменили URL и здесь
+            `https://api.tvelvi.ru/api/api/orders/`, // Изменили URL и здесь
             {
               method: "POST", // Изменили метод и здесь
               headers: {
@@ -44,7 +44,7 @@ export const sendOrderData = createAsyncThunk(
           console.log("Данные успешно отправлены (retry):", data);
           return data;
         } catch (error) {
-          window.location.href = "/";
+          window.location.href = "/register";
           return rejectWithValue("Сессия истекла. Пожалуйста, войдите снова.");
         }
       }

@@ -38,7 +38,7 @@ const partners = [
 const PartnersPage = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/home"); // укажи нужный путь
+    navigate("/register"); // укажи нужный путь
   };
   const handleClick2 = () => {
     navigate("/nextPartners"); // укажи нужный путь

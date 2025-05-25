@@ -13,9 +13,9 @@ import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import SuccessfullyCompleted from "../pages/SuccessfullyCompleted/SuccessfullyCompleted";
 const routes = [
-  { id: 1, path: "/", element: <RegisterPage /> },
+  { id: 1, path: "/register", element: <RegisterPage /> },
   { id: 2, path: "/message", element: <MessagePage /> },
-  { id: 3, path: "/home", element: <HomePage /> },
+  { id: 3, path: "/", element: <HomePage /> },
   { id: 4, path: "/partners", element: <PartnersPage /> },
   { id: 5, path: "/profile", element: <ProfilePage /> },
   { id: 6, path: "/nextPartners", element: <NextPartnersPage /> },

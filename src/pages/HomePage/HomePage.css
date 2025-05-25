@@ -211,3 +211,7 @@ body.modal-open {
 
 .partners-linkBtn {
 }
+.home-info-cover {
+  display: flex;
+  justify-content: center;
+}

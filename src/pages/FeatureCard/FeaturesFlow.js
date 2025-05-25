@@ -35,7 +35,7 @@ const FeaturesFlow = () => {
     });
   };
 
-  const currentPath = window.location.pathname.split("/").pop();
+  const currentPath = window.location.pathname.split("/register").pop();
   const currentPageIndex = pages.findIndex((page) => page.path === currentPath);
 
   const handlers = useSwipeable({
@@ -48,7 +48,7 @@ const FeaturesFlow = () => {
       if (currentPageIndex > 0) {
         navigate(`/features/${pages[currentPageIndex - 1].path}`);
       } else {
-        navigate("/");
+        navigate("/register");
       }
     },
     trackMouse: true,
@@ -64,7 +64,7 @@ const FeaturesFlow = () => {
     if (currentPageIndex > 0) {
       navigate(`/features/${pages[currentPageIndex - 1].path}`);
     } else {
-      navigate("/");
+      navigate("/register");
     }
   };
 

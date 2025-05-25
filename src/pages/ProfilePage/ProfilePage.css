@@ -98,6 +98,7 @@
 .cards-cover {
   width: 300px;
   margin: 0 auto;
+  margin-bottom: 12px;
   @media screen and (max-width: 375px) {
     width: 280px;
   }

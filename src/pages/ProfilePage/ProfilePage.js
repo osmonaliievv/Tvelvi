@@ -53,7 +53,7 @@ const ProfilePage = () => {
     const result = await dispatch(deleteAccount(profile.id));
     if (deleteAccount.fulfilled.match(result)) {
       dispatch(clearAuthState());
-      navigate("/");
+      navigate("/register");
     } else {
       alert("Ошибка при удалении аккаунта: " + result.payload);
     }
@@ -62,7 +62,7 @@ const ProfilePage = () => {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     dispatch(clearAuthState());
-    navigate("/");
+    navigate("/register");
   };
 
   if (status === "loading") {
@@ -76,10 +76,8 @@ const ProfilePage = () => {
   return (
     <div className="profile-page">
       <div className="profile-content">
-        {" "}
-        {/* Обертка для верхнего контента */}
         <div className="text-center relative">
-          <button onClick={() => navigate("/home")} className="back_btn">
+          <button onClick={() => navigate("/")} className="back_btn">
             Назад
           </button>
           <div className="flex flex-col items-center mt-10">

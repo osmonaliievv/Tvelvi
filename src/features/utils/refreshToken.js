@@ -7,7 +7,7 @@ export const refreshAccessToken = async () => {
 
   try {
     const response = await axios.post(
-      "http://localhost:8000/api/users/token/refresh/",
+      "https://api.tvelvi.ru/api/users/token/refresh/",
       {
         refresh,
       }

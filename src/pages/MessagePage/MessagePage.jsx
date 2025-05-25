@@ -34,14 +34,14 @@ const MessagePage = () => {
   useEffect(() => {
     if (success) {
       // Переход на домашнюю страницу после успешной верификации
-      navigate("/home");
+      navigate("/");
     }
   }, [success, navigate]);
 
   useEffect(() => {
     // Проверка токена при монтировании компонента
     if (token) {
-      navigate("/home"); // Если токен есть, переходим на главную страницу
+      navigate("/"); // Если токен есть, переходим на главную страницу
     }
   }, [token, navigate]);
 

@@ -29,7 +29,7 @@ export const fetchUserProfile = createAsyncThunk(
           const data = await retryResponse.json();
           return data[0];
         } catch (err) {
-          window.location.href = "/";
+          window.location.href = "/register";
           return rejectWithValue("Сессия истекла. Пожалуйста, войдите снова.");
         }
       }
@@ -75,7 +75,7 @@ export const fetchUserOrders = createAsyncThunk(
           const data = await retryResponse.json();
           return data;
         } catch (err) {
-          window.location.href = "/";
+          window.location.href = "/register";
           return rejectWithValue("Сессия истекла. Пожалуйста, войдите снова.");
         }
       }

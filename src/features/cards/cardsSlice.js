@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
         throw new Error("Access token not found in localStorage");
       }
 
-      const response = await axios.get("https://api.tvelvi.ru/api/cards/", {
+      const response = await axios.get("https://api.tvelvi.ru/api/api/cards/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
