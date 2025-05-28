@@ -9,6 +9,7 @@ import {
   removeBasicCard,
   selectSelectedBasicCards,
 } from "../../features/selectedCards/selectedCardsSlice";
+import Loading from "../../components/Loading/Loading";
 
 const BasicFeaturesPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
@@ -63,8 +64,10 @@ const BasicFeaturesPage = ({ onPriceChange }) => {
       </div>
       <h2 className="page-title">Базовые функции</h2>
       <div className="features-list">
-        {status === "loading" && <p>Загрузка...</p>}
-        {status === "failed" && <p>Ошибка: {error}</p>}
+        {status === "loading" && <Loading />}
+        {status === "failed" && (
+          <p>Нет товаров для отображения базовых функций</p>
+        )}
         {basicCards.length > 0
           ? basicCards.map((card) => (
               <FeatureCard

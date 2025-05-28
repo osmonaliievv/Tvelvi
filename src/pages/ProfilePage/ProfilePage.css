@@ -21,7 +21,7 @@
   border-radius: 100px;
   color: black;
   left: 12px;
-  top: 57px;
+  top: 20px;
   position: absolute;
   border: none;
 }
@@ -133,4 +133,12 @@
 .cards_id {
   font-size: 18px;
   font-weight: 600;
+}
+
+.register_button-style {
+  color: white;
+  background-color: rgba(111, 53, 255, 1);
+  border: none;
+  padding: 15px 20px;
+  border-radius: 12px;
 }

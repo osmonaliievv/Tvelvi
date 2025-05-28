@@ -1,0 +1,26 @@
+.loading-container {
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center; /* Центрирование по вертикали */
+  width: 100%; /* Занимает всю ширину */
+}
+
+.spinner {
+  border: 8px solid rgba(111, 53, 255, 0.3); /* Цвет спиннера (прозрачный) */
+  border-top: 8px solid rgba(111, 53, 255, 1); /* Основной цвет спиннера */
+  border-radius: 50%; /* Делаем круглым */
+  width: 40px; /* Размер спиннера */
+  height: 40px; /* Размер спиннера */
+  animation: spin 1s linear infinite;
+  margin-top: 20px;
+  margin-bottom: 50px; /* Анимация вращения */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

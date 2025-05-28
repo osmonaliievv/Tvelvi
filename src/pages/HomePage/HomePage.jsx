@@ -7,23 +7,89 @@ import {
   fetchCategoriesFailure,
 } from "../../features/products/categoriesSlice";
 
-import "./HomePage.css";
+import "./HomePage.scss";
 import left_card from "../../assets/Frame 168.svg";
 import center_card from "../../assets/Frame 169.svg";
 import right_card from "../../assets/Frame 170.svg";
 
 // Локальные импорты изображений для карточек
-import burgerPhoto from "../../assets/image 69.svg";
-import cart from "../../assets/image 72.svg";
-import holdPhone from "../../assets/pngwing.com 1.svg";
-import minivan from "../../assets/image 70.svg";
-import like from "../../assets/image 71.svg";
-import study from "../../assets/image 73.svg";
+import burgerPhoto from "../../assets/Remove-bg.ai_1732349357302 1.png"; // This will be used for all mock items
 
 import img_partners from "../../assets/Remove-bg.ai_1732383936587 1.svg";
 import main_image from "../../assets/Black.svg";
 import { useNavigate } from "react-router-dom";
 import profilesvg from "../../assets/Frame 193.svg";
+import Loading from "../../components/Loading/Loading"; // Убедись, что путь правильный
+
+// MOCK DATA based on the provided image, using burgerPhoto for all items
+const MOCK_CATEGORIES_DATA = [
+  {
+    id: 1,
+    name: "Приложения",
+    cards: [
+      {
+        id: 101,
+        title: "Фудтех-приложение",
+        description: "Приложение для заказа еды и напитков с доставкой.",
+        image: burgerPhoto,
+        price: 50000,
+      },
+      {
+        id: 102,
+        title: "Интернет-магазин",
+        description: "Полнофункциональный интернет-магазин для любых товаров.",
+        image: burgerPhoto,
+        price: 70000,
+      },
+      {
+        id: 103,
+        title: "Сервис бронирования",
+        description: "Приложение для бронирования услуг, столиков или билетов.",
+        image: burgerPhoto,
+        price: 60000,
+      },
+      {
+        id: 104,
+        title: "Сервис доставки",
+        description: "Приложение для организации и отслеживания доставки.",
+        image: burgerPhoto,
+        price: 55000,
+      },
+      {
+        id: 105,
+        title: "Сервис доставки",
+        description: "Приложение для организации и отслеживания доставки.",
+        image: burgerPhoto,
+        price: 55000,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Разработка сайтов",
+    cards: [
+      {
+        id: 105,
+        title: "Приложение соцсети",
+        description: "Платформа для общения и обмена контентом.",
+        image: burgerPhoto,
+        price: 80000,
+      },
+      {
+        id: 106,
+        title: "Приложение обучения",
+        description: "Образовательная платформа с курсами и уроками.",
+        image: burgerPhoto,
+        price: 75000,
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Разработка игр",
+    cards: [],
+  },
+];
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -61,13 +127,15 @@ export default function HomePage() {
             dispatch(fetchCategoriesSuccess(data));
           })
           .catch((error) => {
-            // При ошибке, диспатчим экшен ошибки
+            // При ошибке, диспатчим экшен ошибки, но также передаем mock data
             console.error("Ошибка при получении категорий:", error);
             dispatch(
               fetchCategoriesFailure(
                 error.message || "Произошла неизвестная ошибка."
               )
             );
+            // Dispatch success with mock data on failure to display content
+            dispatch(fetchCategoriesSuccess(MOCK_CATEGORIES_DATA));
           });
       };
 
@@ -83,6 +151,12 @@ export default function HomePage() {
       activeCategory === ""
     ) {
       setActiveCategory(categoriesData[0].name);
+    } else if (
+      status === "failed" && // If status is failed and we're showing mock data
+      categoriesData.length > 0 &&
+      activeCategory === ""
+    ) {
+      setActiveCategory(categoriesData[0].name);
     }
   }, [status, categoriesData, activeCategory]);
 
@@ -91,6 +165,9 @@ export default function HomePage() {
   };
   const handleClick2 = () => {
     navigate("/profile");
+  };
+  const handleClick22 = () => {
+    navigate("/basicFeaturesPage");
   };
 
   const currentCategoryItems =
@@ -108,25 +185,6 @@ export default function HomePage() {
     setSelectedItem(null);
     document.body.classList.remove("modal-open");
   };
-
-  // Отображаем состояние загрузки
-  if (status === "loading") {
-    return <div className="loading-state">Загрузка категорий...</div>;
-  }
-
-  // Отображаем состояние ошибки
-  if (status === "failed") {
-    return (
-      <div className="error-state">
-        Ошибка загрузки данных: {error}. Пожалуйста, попробуйте еще раз.
-      </div>
-    );
-  }
-
-  // Если данные успешно загружены, но categoriesData пуста
-  if (status === "succeeded" && categoriesData.length === 0) {
-    return <div className="no-data-state">Нет доступных категорий.</div>;
-  }
 
   return (
     <div className="home-container">
@@ -184,42 +242,39 @@ export default function HomePage() {
             </button>
           ))}
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "24px",
-          }}
-        >
-          {currentCategoryItems.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                textAlign: "center",
-                cursor: "pointer",
-              }}
-              onClick={() => openModal(item)}
-              className="home-cardds"
-            >
-              <img
-                src={item.image || burgerPhoto}
-                alt={item.title}
+        {/* Условный рендеринг загрузки в разделе товаров */}
+        {status === "loading" ? (
+          <div className="product-loading-container">
+            <Loading />
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          >
+            {currentCategoryItems.map((item) => (
+              <div
+                key={item.id}
                 style={{
-                  width: "100%",
-                  borderRadius: "16px",
-                  boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.1)",
-                  background: "white",
+                  textAlign: "center",
+                  cursor: "pointer",
+                  marginBottom: "16px",
                 }}
-              />
-              <p
-                style={{ marginTop: "12px", fontSize: "16px", fontWeight: 500 }}
+                onClick={() => openModal(item)}
+                className="home-cardds"
               >
-                {item.title}
-              </p>
-            </div>
-          ))}
-        </div>
+                <div className="home-cardds__imggg">
+                  <img src={item.image || burgerPhoto} alt={item.title} />
+                </div>
+
+                <p className="home-cardds__texttt">{item.title}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="w-full max-w-[680px] p-6 rounded-2xl bg-gradient-to-r from-[#E0D8FF] to-[#EAE4FF] flex justify-between items-center relative overflow-hidden shadow-md">
         <div className="home-partners">
@@ -282,7 +337,7 @@ export default function HomePage() {
           >
             <div className="Model_flex-text-img">
               <div>
-                <h3>{selectedItem.title}</h3>
+                <h3 className="Model_flex-text-title">{selectedItem.title}</h3>
                 <p className="Model_flex-text-img__text">
                   {selectedItem.description}
                 </p>
@@ -297,8 +352,12 @@ export default function HomePage() {
             </div>
             <div className="Model_flex">
               <h3 className="Model_price">{selectedItem.price} ₽+</h3>
-              <button className="Model_btn1">Настроить</button>
-              <button className="Model_btn2">Перейти</button>
+              <button onClick={handleClick22} className="Model_btn1">
+                Настроить
+              </button>
+              <button onClick={handleClick22} className="Model_btn2">
+                Перейти
+              </button>
             </div>
           </div>
         </div>

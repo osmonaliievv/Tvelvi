@@ -8,6 +8,7 @@ import {
   removeAdditionalCard,
   selectSelectedAdditionalCards,
 } from "../../features/selectedCards/selectedCardsSlice";
+import Loading from "../../components/Loading/Loading";
 
 const AdditionalFeaturesPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
@@ -65,8 +66,10 @@ const AdditionalFeaturesPage = ({ onPriceChange }) => {
       </div>
       <h2 className="page-title">Дополнительные функции</h2>
       <div className="features-list">
-        {status === "loading" && <p>Загрузка...</p>}
-        {status === "failed" && <p>Ошибка: {error}</p>}
+        {status === "loading" && <Loading />}
+        {status === "failed" && (
+          <p>Нет товаров для отображения дополнительных функций</p>
+        )}
         {additionalFeatures.length > 0
           ? additionalFeatures.map((card) => (
               <FeatureCard

@@ -9,6 +9,7 @@ import {
   removeDesignCard,
   selectSelectedDesignCards,
 } from "../../features/selectedCards/selectedCardsSlice";
+import Loading from "../../components/Loading/Loading";
 
 const DesignPage = ({ onPriceChange }) => {
   const navigate = useNavigate();
@@ -66,8 +67,10 @@ const DesignPage = ({ onPriceChange }) => {
       </div>
       <h2 className="page-title">Дизайн</h2>
       <div className="features-list">
-        {status === "loading" && <p>Загрузка...</p>}
-        {status === "failed" && <p>Ошибка: {error}</p>}
+        {status === "loading" && <Loading />}
+        {status === "failed" && (
+          <p>Нет товаров для отображения опций дизайна</p>
+        )}
         {designOptions.length > 0
           ? designOptions.map((card) => (
               <FeatureCard
