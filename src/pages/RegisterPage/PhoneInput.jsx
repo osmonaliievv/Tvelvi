@@ -1,15 +1,7 @@
 import React from "react";
 import { IMaskInput } from "react-imask";
 
-const PhoneInput = ({
-  value,
-  onChange,
-  label,
-  error,
-
-  name,
-  classInput,
-}) => {
+const PhoneInput = ({ value, onChange, label, error, name, classInput }) => {
   return (
     <div className="PhoneInput-container">
       <div className="title">
