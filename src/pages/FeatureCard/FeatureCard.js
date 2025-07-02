@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./FeatureCard.css";
 
 const FeatureCard = ({
@@ -11,25 +11,58 @@ const FeatureCard = ({
   onCardSelect,
   className = "",
   hint,
+  // isSelected - этот пропс теперь будет опциональным
+  // и будет использоваться для внешнего контроля (как на SectionSelectionPage)
+  isSelected: propIsSelected, // Переименовываем пропс, чтобы избежать конфликта с внутренним состоянием
 }) => {
-  const [isSelected, setIsSelected] = useState(false);
+  // Используем внутреннее состояние isSelected,
+  // если propIsSelected не передан (т.е. карточка управляет собой сама)
+  const [internalIsSelected, setInternalIsSelected] = useState(false);
+
+  // Определяем фактическое состояние isSelected:
+  // Если propIsSelected передан, используем его (для SectionSelectionPage)
+  // Иначе используем внутреннее состояние (для BasicFeaturesPage и т.д.)
+  const currentIsSelected =
+    propIsSelected !== undefined ? propIsSelected : internalIsSelected;
+
+  // Обновляем внутреннее состояние, если propIsSelected меняется (для случаев, когда родитель контролирует)
+  useEffect(() => {
+    if (propIsSelected !== undefined && propIsSelected !== internalIsSelected) {
+      setInternalIsSelected(propIsSelected);
+    }
+  }, [propIsSelected]);
 
   const handleToggle = () => {
-    setIsSelected(!isSelected);
-    if (typeof onPriceChange === "function") {
-      onPriceChange(isSelected ? -price : price);
+    // Определяем, какое состояние будет изменено
+    const newSelectedState = !currentIsSelected;
+
+    // Обновляем внутреннее состояние, если родитель не контролирует
+    if (propIsSelected === undefined) {
+      setInternalIsSelected(newSelectedState);
     }
 
-    // передаем информацию о карточке в родительский компонент
+    // Если функция onCardSelect предоставлена, вызываем ее.
+    // Она будет использоваться для внешнего управления (например, на SectionSelectionPage)
+    // или для уведомления родителя о выборе на других страницах.
     if (onCardSelect) {
-      onCardSelect({
-        id: id,
-        card_name: title,
-        price,
-        description,
-        image,
-        hint,
-      }); // Включаем hint
+      onCardSelect(
+        {
+          id: id,
+          card_name: title, // Сохраняем как card_name для совместимости с OrderCard
+          description: description,
+          price: price,
+          photo: image, // Сохраняем как photo для совместимости с OrderCard
+          hint: hint,
+        },
+        newSelectedState
+      ); // Передаем новое состояние выбора
+    }
+
+    // Логика изменения общей цены (только для страниц, где это применимо,
+    // например, BasicFeaturesPage, AdditionalFeaturesPage, DesignPage).
+    // SectionSelectionPage не будет передавать onPriceChange.
+    if (typeof onPriceChange === "function") {
+      onPriceChange(newSelectedState ? parseFloat(price) : -parseFloat(price));
     }
   };
 
@@ -42,11 +75,13 @@ const FeatureCard = ({
 
   return (
     <div
-      className={`feature-card ${className} ${isSelected ? "selected" : ""}`}
+      className={`feature-card ${className} ${
+        currentIsSelected ? "selected" : ""
+      }`}
       onClick={handleToggle}
       onKeyDown={handleKeyDown}
       role="checkbox"
-      aria-checked={isSelected}
+      aria-checked={currentIsSelected}
       tabIndex={0}
       key={id}
     >
@@ -58,14 +93,14 @@ const FeatureCard = ({
                 <div className="feature-price">
                   {(price || 0).toLocaleString()} ₽
                 </div>
-                <div className="feature-hint">{hint}</div>
+                {hint && <div className="feature-hint">{hint}</div>}
               </div>
               {image && (
                 <div className="feature_image">
                   {typeof image === "string" ? (
                     <img src={image} alt={title} />
                   ) : (
-                    image // Предполагается, что это JSX.Element
+                    image
                   )}
                 </div>
               )}
@@ -77,7 +112,7 @@ const FeatureCard = ({
           <p>{description}</p>
         </div>
       </div>
-      {isSelected && (
+      {currentIsSelected && (
         <div className="feature-check">
           <svg
             className="check-icon"

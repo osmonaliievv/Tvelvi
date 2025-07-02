@@ -6,11 +6,13 @@ import {
   selectSelectedBasicCards,
   selectSelectedAdditionalCards,
   selectSelectedDesignCards,
-  sendOrderData,
-  selectSendOrderStatus,
-  selectSendOrderError,
   clearSelectedCards, // Опционально
 } from "../../features/selectedCards/selectedCardsSlice";
+import { createOrder } from "../../features/orders/ordersSlice"; // <-- НОВЫЙ ИМПОРТ
+import {
+  selectProduct,
+  clearSelectedProduct,
+} from "../../features/selectedProducts/selectedProductSlice"; // <-- НОВЫЙ ИМПОРТ
 
 const FinalPricePage = () => {
   const navigate = useNavigate();
@@ -18,8 +20,9 @@ const FinalPricePage = () => {
   const selectedBasic = useSelector(selectSelectedBasicCards);
   const selectedAdditional = useSelector(selectSelectedAdditionalCards);
   const selectedDesign = useSelector(selectSelectedDesignCards);
-  const sendOrderStatus = useSelector(selectSendOrderStatus);
-  const sendOrderError = useSelector(selectSendOrderError);
+  const selectedProduct = useSelector(selectProduct); // Получаем выбранный продукт с HomePage
+  const orderStatus = useSelector((state) => state.orders.status); // Статус отправки заказа
+  const orderError = useSelector((state) => state.orders.error); // Ошибка отправки заказа
 
   const handleGoToPayment = async () => {
     // 1. Подготовьте данные заказа (массив ID выбранных карт)
@@ -29,30 +32,64 @@ const FinalPricePage = () => {
       ...selectedDesign.map((card) => card.id),
     ];
 
-    if (selectedCardIds.length === 0) {
-      alert("Пожалуйста, выберите товары для заказа.");
+    if (selectedCardIds.length === 0 && !selectedProduct) {
+      alert("Пожалуйста, выберите услуги или пакет для заказа.");
       return;
     }
 
-    const orderData = {
+    // Если заказ создается на основе SectionCard (выбранной на HomePage),
+    // то selected_cards уже привязаны к SectionCard на бэкенде.
+    // Если же это пошаговый выбор, то отправляем ID выбранных OrderCard.
+    // Здесь мы объединяем оба сценария, если это возможно,
+    // или выбираем один, если логика строго разделена.
+
+    let orderData = {};
+
+    // Если выбран продукт с HomePage (SectionCard), то мы используем эндпоинт generate-order
+    // В этом случае, мы не отправляем selected_cards, так как они будут взяты из SectionCard на бэкенде.
+    // Если же это обычный пошаговый заказ, то отправляем selected_cards.
+    // Для простоты, если selectedProduct есть, мы будем использовать его ID для generate-order.
+    // В противном случае, мы используем выбранные карточки.
+
+    // ВНИМАНИЕ: Здесь нужно решить, какой путь создания заказа вы используете.
+    // Если пользователь пришел сюда после выбора SectionCard на HomePage,
+    // то логика должна быть через generateOrderFromSectionCard.
+    // Если пользователь пришел сюда после пошагового выбора Basic/Additional/Design,
+    // то логика должна быть через createOrder с selected_cards.
+
+    // Предположим, что эта страница используется для агрегации всех выбранных OrderCard
+    // и создания заказа на их основе. Если пользователь пришел сюда через SectionSelectionPage,
+    // то он уже создал заказ там.
+    // Таким образом, на этой странице мы работаем только с selected_cards.
+
+    orderData = {
       selected_cards: selectedCardIds, // Отправляем массив ID выбранных карт
     };
 
-    console.log("Данные заказа перед отправкой:", orderData); // Проверяем, что отправляем массив ID
+    console.log("Данные заказа перед отправкой:", orderData);
 
     // 2. Отправьте данные заказа
-    const result = await dispatch(sendOrderData(orderData));
+    const result = await dispatch(createOrder(orderData)); // Используем createOrder
 
     // 3. Обработайте результат отправки
-    if (sendOrderData.fulfilled.match(result)) {
+    if (createOrder.fulfilled.match(result)) {
       console.log("Заказ успешно отправлен:", result.payload);
-      dispatch(clearSelectedCards()); // Опционально
+      dispatch(clearSelectedCards()); // Очищаем выбранные карточки
+      dispatch(clearSelectedProduct()); // Очищаем выбранный продукт с HomePage
       navigate("/successfully/");
-    } else if (sendOrderData.rejected.match(result)) {
+    } else if (createOrder.rejected.match(result)) {
       console.error("Ошибка при отправке заказа:", result.payload);
-      alert(`Ошибка при оформлении заказа: ${result.payload}`);
+      const errorMessage =
+        result.payload && typeof result.payload === "object"
+          ? JSON.stringify(result.payload)
+          : result.payload;
+      alert(`Ошибка при оформлении заказа: ${errorMessage}`);
     }
   };
+
+  const totalSum = [...selectedBasic, ...selectedAdditional, ...selectedDesign]
+    .reduce((sum, card) => sum + parseFloat(card.price || 0), 0)
+    .toLocaleString();
 
   return (
     <div className="page">
@@ -72,6 +109,9 @@ const FinalPricePage = () => {
         <div className="active" onClick={() => navigate("/finalPrice")}></div>
       </div>
       <h2 className="page-title">Финальная стоимость</h2>
+      {selectedProduct && (
+        <h3 className="page-subtitle">для: {selectedProduct.title}</h3>
+      )}
       <div className="final-price-container">
         <div className="amount">
           {selectedBasic.length > 0 && (
@@ -151,22 +191,14 @@ const FinalPricePage = () => {
         </div>
 
         <div className="priceAndButton">
-          <div className="finalPrice">
-            Итого:{" "}
-            {[...selectedBasic, ...selectedAdditional, ...selectedDesign]
-              .reduce((sum, card) => sum + parseFloat(card.price || 0), 0)
-              .toLocaleString()}{" "}
-            ₽
-          </div>
+          <div className="finalPrice">Итого: {totalSum} ₽</div>
           <div className="final-price-buttonCover">
-            {sendOrderStatus === "loading" && <p>Отправка заказа...</p>}
-            {sendOrderError && (
-              <p style={{ color: "red" }}>Ошибка: {sendOrderError}</p>
-            )}
+            {orderStatus === "loading" && <p>Отправка заказа...</p>}
+            {orderError && <p style={{ color: "red" }}>Ошибка: {orderError}</p>}
             <button
               className="final-price-buttonn"
               onClick={handleGoToPayment}
-              disabled={sendOrderStatus === "loading"}
+              disabled={orderStatus === "loading"}
             >
               Перейти к оплате
             </button>

@@ -1,10 +1,11 @@
+// src/routes/MainRoutes.jsx
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import MessagePage from "../pages/MessagePage/MessagePage";
 import HomePage from "../pages/HomePage/HomePage";
 import PartnersPage from "../pages/PartnersPage/PartnersPage";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import NextPartnersPage from "../pages/NexrPartnersPage/NextPatnersPage";
-import FeaturesFlow from "../pages/FeatureCard/FeaturesFlow";
+import FeaturesFlow from "../pages/FeatureCard/FeaturesFlow"; // Убедитесь, что это правильный путь
 import BasicFeaturesPage from "../pages/BasicFeaturesPage/BasicFeaturesPage";
 import DesignPage from "../pages/DesighPage/DesighPage";
 import FinalPricePage from "../pages/FinalPricePage/FinalPricePage";
@@ -12,6 +13,8 @@ import AdditionalFeaturesPage from "../pages/AdditionalFeaturesPage/AdditionalFe
 import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
 import SuccessfullyCompleted from "../pages/SuccessfullyCompleted/SuccessfullyCompleted";
+import SectionSelectionPage from "../pages/SectionSelectionPage/SectionSelectionPage";
+
 const routes = [
   { id: 1, path: "/register", element: <RegisterPage /> },
   { id: 2, path: "/message", element: <MessagePage /> },
@@ -29,6 +32,7 @@ const routes = [
   { id: 10, path: "/finalPrice", element: <FinalPricePage /> },
   { id: 11, path: "/features/*", element: <FeaturesFlow /> },
   { id: 12, path: "/successfully/", element: <SuccessfullyCompleted /> },
+  { id: 13, path: "/section-selection", element: <SectionSelectionPage /> }, // Новый маршрут
 ];
 
 const MainRoutes = () => {

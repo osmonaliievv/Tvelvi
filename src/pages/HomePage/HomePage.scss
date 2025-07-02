@@ -5,6 +5,13 @@ body.modal-open {
   background: linear-gradient(to bottom, rgb(203, 205, 248), white);
   padding: 10px;
 }
+.home-container__inner {
+  max-width: 650px;
+  margin: 0 auto;
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
+}
 
 .profile_button-cover {
   display: flex;
@@ -50,7 +57,7 @@ body.modal-open {
 .home-partners {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 95%;
   border-radius: 16px;
   background: linear-gradient(135deg, #e5e6fa, #babdff);
   padding-left: 10px;
@@ -65,6 +72,7 @@ body.modal-open {
 }
 .buttons-category {
   display: flex;
+  // justify-content: center;
   gap: 12px;
   margin-bottom: 20px;
   overflow-x: auto;
@@ -248,4 +256,49 @@ body.modal-open {
     width: 130px;
     height: 80px;
   }
+}
+
+/* Добавленные стили для свайпа и скрытия прокрутки */
+.product-list-wrapper {
+  overflow: hidden; /* Скрываем стандартный скроллбар */
+  width: 100%;
+}
+
+.product-list-inner {
+  display: flex; /* Делаем категории в ряд */
+  transition: transform 0.3s ease-in-out; /* Плавный переход */
+  width: 100%; /* Задаем ширину, чтобы transform работал корректно */
+}
+
+.category-products-container {
+  min-width: 100%; /* Каждая категория занимает всю ширину обертки */
+  display: flex; /* Для размещения карточек внутри категории */
+  flex-wrap: wrap; /* Разрешаем перенос карточек */
+  justify-content: space-between; /* Распределяем карточки равномерно */
+  box-sizing: border-box; //* Учитываем padding в ширине */
+  // @media screen and (max-width: 400px) {
+  //   gap: 16px; /* Добавляем отступы между карточками */
+  // }
+}
+
+.no-products-message {
+  width: 100%;
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
+}
+.fixed-button-container button {
+  background: #6f35ff;
+  color: white;
+  padding: 12px 95px;
+  border: 0;
+  border-radius: 12px;
+  width: 100%; /* Делаем кнопку растягивающейся на всю доступную ширину */
+}
+
+.category-button {
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap; /* Чтобы текст кнопки не переносился */
 }

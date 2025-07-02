@@ -1,0 +1,101 @@
+/* Можно использовать общие стили из BasicFeaturesPage.css как основу */
+.page {
+  background: #f9f9f9;
+  padding-top: 50px;
+}
+
+.page-title {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 16px 0;
+}
+
+/* Если шаги не нужны, можно удалить или закомментировать этот блок */
+.steps {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steps div {
+  width: 16px;
+  height: 16px;
+  background: #efefef;
+  border-radius: 50px;
+}
+
+.steps span {
+  width: 100px;
+  height: 6px;
+  background: #efefef;
+}
+
+.steps div.active,
+.steps span.active {
+  background: #6f35ff;
+}
+
+@media (max-width: 375px) {
+  .steps span {
+    width: 80px;
+  }
+}
+
+@media (max-width: 320px) {
+  .steps span {
+    width: 60px;
+  }
+}
+
+.features-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 100px; /* Важно, чтобы кнопка внизу не перекрывала контент */
+}
+
+.page-title {
+  font-family: Manrope;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.fixed-button-container {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; /* Добавлено, чтобы кнопка занимала всю ширину контейнера на мобильных */
+  padding: 0 16px; /* Отступы по бокам */
+  box-sizing: border-box; /* Учитываем padding в общей ширине */
+  display: flex; /* Для центрирования кнопки, если она меньше 100% */
+  justify-content: center;
+}
+
+.fixed-button-container button {
+  background: #6f35ff;
+  color: white;
+  padding: 12px 95px;
+  border: 0;
+  border-radius: 12px;
+  width: 100%; /* Кнопка занимает всю доступную ширину внутри контейнера */
+  max-width: 343px; /* Ограничиваем максимальную ширину */
+}
+
+/* Стили для выбранной SectionCard */
+.section-selection-page .feature-card {
+  border: 2px solid transparent; /* Дефолтная рамка */
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.section-selection-page .feature-card.selected {
+  border-color: #6f35ff; /* Цвет рамки для выбранной карточки */
+  box-shadow: 0 0 10px rgba(111, 53, 255, 0.4); /* Легкая тень для выделения */
+}
+
+/* Можете добавить или изменить другие стили SectionSelectionPage по необходимости */
