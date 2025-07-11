@@ -13,6 +13,7 @@ import {
   selectProduct,
   clearSelectedProduct,
 } from "../../features/selectedProducts/selectedProductSlice"; // <-- НОВЫЙ ИМПОРТ
+import Loading from "../../components/Loading/Loading";
 
 const FinalPricePage = () => {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ const FinalPricePage = () => {
       </div>
       <h2 className="page-title">Финальная стоимость</h2>
       {selectedProduct && (
-        <h3 className="page-subtitle">для: {selectedProduct.title}</h3>
+        <h3 className="page-subtitle">{selectedProduct.title}</h3>
       )}
       <div className="final-price-container">
         <div className="amount">
@@ -192,8 +193,19 @@ const FinalPricePage = () => {
 
         <div className="priceAndButton">
           <div className="finalPrice">Итого: {totalSum} ₽</div>
-          <div className="final-price-buttonCover">
-            {orderStatus === "loading" && <p>Отправка заказа...</p>}
+          <div
+            className="final-price-buttonCover"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {orderStatus === "loading" && (
+              <p>
+                <Loading />
+              </p>
+            )}
             {orderError && <p style={{ color: "red" }}>Ошибка: {orderError}</p>}
             <button
               className="final-price-buttonn"

@@ -336,15 +336,11 @@ export default function HomePage() {
                   >
                     {category.cards.length > 0 ? (
                       category.cards.map((item) => (
-                        <div
-                          key={item.id}
-                          style={{
-                            textAlign: "center",
-                            marginBottom: "16px",
-                          }}
-                          className="home-cardds"
-                        >
-                          <div className="home-cardds__imggg">
+                        <div key={item.id} className="home-cardds">
+                          <div
+                            className="home-cardds__imggg"
+                            style={{ cursor: "pointer" }}
+                          >
                             <img
                               src={item.image || burgerPhoto}
                               alt={item.title}

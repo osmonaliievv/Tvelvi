@@ -1,14 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+
 body.modal-open {
   overflow: hidden;
 }
+
 .home-container {
   background: linear-gradient(to bottom, rgb(203, 205, 248), white);
   padding: 10px;
 }
+
 .home-container__inner {
   max-width: 650px;
   margin: 0 auto;
-  @media screen and (max-width: 400px) {
+}
+
+@media screen and (max-width: 400px) {
+  .home-container__inner {
     width: 100%;
   }
 }
@@ -17,23 +24,27 @@ body.modal-open {
   display: flex;
   justify-content: flex-end;
 }
+
 .profile_main-photo {
   display: flex;
   justify-content: center;
   width: 351px;
   height: 294px;
   margin: 0 auto;
-  @media screen and (max-width: 400px) {
+}
+
+@media screen and (max-width: 400px) {
+  .profile_main-photo {
     width: 300px;
     height: 100%;
   }
 }
+
 .profile_main-photo img {
-  @media screen and (max-width: 400px) {
-    width: 100%;
-    height: 100%;
-  }
+  width: 100%;
+  height: 100%;
 }
+
 .info-box {
   width: 351px;
   height: 270px;
@@ -43,17 +54,22 @@ body.modal-open {
   padding: 15px;
   position: relative;
   margin: 10px;
-  @media screen and (max-width: 400px) {
+}
+
+@media screen and (max-width: 400px) {
+  .info-box {
     width: 290px;
     height: 100%;
   }
 }
+
 .info-box_card {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   padding: 10px;
 }
+
 .home-partners {
   display: flex;
   justify-content: space-between;
@@ -62,6 +78,7 @@ body.modal-open {
   background: linear-gradient(135deg, #e5e6fa, #babdff);
   padding-left: 10px;
 }
+
 .right-partners button {
   width: 36px;
   height: 36px;
@@ -70,9 +87,9 @@ body.modal-open {
   top: 10px;
   left: 305px;
 }
+
 .buttons-category {
   display: flex;
-  // justify-content: center;
   gap: 12px;
   margin-bottom: 20px;
   overflow-x: auto;
@@ -88,10 +105,17 @@ body.modal-open {
   color: #000000;
   font-size: 16px;
   font-weight: 500;
-  @media screen and (max-width: 400px) {
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 400px) {
+  .category-button {
     padding: 0;
   }
 }
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -103,62 +127,75 @@ body.modal-open {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  /* @media screen and (max-width: 400px) {
-    padding: 20px;
-  } */
 }
+
 .modal-content {
   background-color: white;
   padding: 12px 14px;
   border-radius: 12px;
   width: 355px;
+}
 
-  @media screen and (max-width: 400px) {
+@media screen and (max-width: 400px) {
+  .modal-content {
     width: 300px;
   }
+}
 
-  @media screen and (max-width: 340px) {
+@media screen and (max-width: 340px) {
+  .modal-content {
     width: 270px;
   }
 }
+
 .Model_flex-text-img__text {
   width: 200px;
   font-size: 12px;
-  @media screen and (max-width: 340px) {
+}
+
+@media screen and (max-width: 340px) {
+  .Model_flex-text-img__text {
     width: 180px;
   }
 }
+
 .Model_flex-text-title {
   width: 200px;
   font-size: 16px;
-  @media screen and (max-width: 340px) {
+}
+
+@media screen and (max-width: 340px) {
+  .Model_flex-text-title {
     width: 180px;
   }
 }
+
 .Model_flex-text-img__img {
   width: 100px;
   height: 70px;
   margin: 0 5px;
-  /* @media screen and (max-width: 400px) {
-    width: 100%;
-    margin: 0 auto;
-  } */
 }
+
 .Model_flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  @media screen and (max-width: 400px) {
+}
+
+@media screen and (max-width: 400px) {
+  .Model_flex {
     justify-content: space-around;
     flex-wrap: wrap;
     gap: 10px;
   }
 }
+
 .Model_price {
   font-size: 20px;
   color: rgba(111, 53, 255, 1);
 }
+
 .Model_btn1 {
   width: 102px;
   height: 36px;
@@ -168,6 +205,7 @@ body.modal-open {
   border: 1px rgba(111, 53, 255, 1) solid;
   border-radius: 12px;
 }
+
 .Model_btn2 {
   width: 102px;
   height: 36px;
@@ -177,54 +215,50 @@ body.modal-open {
   border-radius: 12px;
   border: none;
 }
+
 .Model_flex-text-img {
   display: flex;
   align-items: center;
   gap: 20px;
-  @media screen and (max-width: 400px) {
+}
+
+@media screen and (max-width: 400px) {
+  .Model_flex-text-img {
     gap: 0;
     justify-content: center;
   }
 }
+
 .info-box_card__left {
-  @media screen and (max-width: 400px) {
-    width: 80px;
-    height: 80px;
-  }
-}
-.info-box_card__left img {
-  @media screen and (max-width: 400px) {
-    width: 100%;
-    height: 100%;
-  }
-}
-.info-box_card__center {
-  @media screen and (max-width: 400px) {
-    width: 80px;
-    height: 80px;
-  }
-}
-.info-box_card__center img {
-  @media screen and (max-width: 400px) {
-    width: 100%;
-    height: 100%;
-  }
-}
-.info-box_card__right {
-  @media screen and (max-width: 400px) {
-    width: 80px;
-    height: 80px;
-  }
-}
-.info-box_card__right img {
-  @media screen and (max-width: 400px) {
-    width: 100%;
-    height: 100%;
-  }
+  width: 80px;
+  height: 80px;
 }
 
-.partners-linkBtn {
+.info-box_card__left img {
+  width: 100%;
+  height: 100%;
 }
+
+.info-box_card__center {
+  width: 80px;
+  height: 80px;
+}
+
+.info-box_card__center img {
+  width: 100%;
+  height: 100%;
+}
+
+.info-box_card__right {
+  width: 80px;
+  height: 80px;
+}
+
+.info-box_card__right img {
+  width: 100%;
+  height: 100%;
+}
+
 .home-info-cover {
   display: flex;
   justify-content: center;
@@ -236,49 +270,44 @@ body.modal-open {
   max-width: 133px;
   padding: 0;
   margin: 0;
-  @media screen and (max-width: 370px) {
+}
+
+@media screen and (max-width: 370px) {
+  .home-cardds__texttt {
     width: 120px;
     height: 80px;
   }
 }
+
 .home-cardds__imggg {
-  width: 165px;
-  height: 100px;
   border-radius: 16px;
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
   background-color: white;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  @media screen and (max-width: 370px) {
-    width: 130px;
-    height: 80px;
-  }
 }
 
-/* Добавленные стили для свайпа и скрытия прокрутки */
+.home-cardds__imggg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .product-list-wrapper {
-  overflow: hidden; /* Скрываем стандартный скроллбар */
+  overflow: hidden;
   width: 100%;
 }
 
 .product-list-inner {
-  display: flex; /* Делаем категории в ряд */
-  transition: transform 0.3s ease-in-out; /* Плавный переход */
-  width: 100%; /* Задаем ширину, чтобы transform работал корректно */
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
 }
 
 .category-products-container {
-  min-width: 100%; /* Каждая категория занимает всю ширину обертки */
-  display: flex; /* Для размещения карточек внутри категории */
-  flex-wrap: wrap; /* Разрешаем перенос карточек */
-  justify-content: space-between; /* Распределяем карточки равномерно */
-  box-sizing: border-box; //* Учитываем padding в ширине */
-  // @media screen and (max-width: 400px) {
-  //   gap: 16px; /* Добавляем отступы между карточками */
-  // }
+  min-width: 100%;
+  display: grid; /* Changed to grid */
+  grid-template-columns: repeat(2, 1fr); /* Two columns, full width */
+  gap: 16px 50px; /* Gap between cards */
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .no-products-message {
@@ -287,18 +316,19 @@ body.modal-open {
   color: #666;
   margin-top: 20px;
 }
+
 .fixed-button-container button {
   background: #6f35ff;
   color: white;
   padding: 12px 95px;
   border: 0;
   border-radius: 12px;
-  width: 100%; /* Делаем кнопку растягивающейся на всю доступную ширину */
+  width: 100%;
 }
 
-.category-button {
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap; /* Чтобы текст кнопки не переносился */
+.home-cardds {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
