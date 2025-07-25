@@ -27,10 +27,10 @@ const FeaturesFlow = () => {
   ];
 
   const handlePriceChange = (priceDelta) => {
-    console.log("handlePriceChange called with:", priceDelta);
+    // console.log("handlePriceChange called with:", priceDelta);
     setTotalPrice((prev) => {
       const newPrice = prev + priceDelta;
-      console.log("New totalPrice:", newPrice);
+      // console.log("New totalPrice:", newPrice);
       return newPrice;
     });
   };
@@ -74,7 +74,7 @@ const FeaturesFlow = () => {
     "Current page index:",
     currentPageIndex
   );
-  console.log("Total price in FeaturesFlow:", totalPrice);
+  // console.log("Total price in FeaturesFlow:", totalPrice);
 
   return (
     <div className="app" {...handlers}>

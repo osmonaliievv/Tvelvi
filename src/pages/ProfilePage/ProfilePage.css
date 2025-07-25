@@ -1,11 +1,24 @@
 .profile-page {
-  width: 100vw;
-  flex-direction: column;
-  display: flex;
+  max-width: 600px;
   min-height: 100vh; /* Занимаем всю высоту экрана */
-  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
   box-sizing: border-box;
   text-align: center;
+  margin: 0 auto; /* Центрируем по горизонтали */
+  background: radial-gradient(
+    circle at top center,
+    rgb(203, 205, 248) 20%,
+    rgba(203, 205, 248, 0) 30%
+  );
+
+  background-size: 100% 70%;
+  background-repeat: no-repeat;
+  padding-top: 20px;
+}
+/* .profile-header {
+  
+} */
+
+.text-center {
 }
 
 .profile-content {
@@ -15,14 +28,15 @@
 /* Остальные стили без изменений */
 
 .back_btn {
+  display: flex;
+  justify-content: start;
+}
+.back_btn button {
   background-color: white;
   width: 71px;
   height: 34px;
   border-radius: 100px;
   color: black;
-  left: 12px;
-  top: 20px;
-  position: absolute;
   border: none;
 }
 
@@ -33,7 +47,6 @@
 }
 
 .profile_icon img {
-  margin-top: 71px;
   width: 100%;
 }
 
@@ -52,9 +65,10 @@
   bottom: 0; /* Прижимаем к низу */
   left: 0; /* Растягиваем по ширине */
   right: 0; /* Растягиваем по ширине */
-  background-color: white; /* Добавляем фон */
   padding: 20px;
   box-sizing: border-box;
+  max-width: 600px;
+  margin: 0 auto; /* Центрируем по горизонтали */
 }
 
 .exit_btn {
@@ -94,11 +108,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
+  margin: 12px;
 }
 .cards-cover {
-  width: 300px;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: 12px;
+  max-height: 80px;
   @media screen and (max-width: 375px) {
     width: 280px;
   }
@@ -114,6 +130,7 @@
 .profile_phone_number {
   font-size: 20px;
   font-weight: 600;
+  padding-bottom: 50px;
 }
 
 .cards_status {

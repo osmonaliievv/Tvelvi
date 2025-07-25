@@ -31,7 +31,6 @@
   box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   @media screen and (max-width: 360px) {
-    flex-direction: column;
     gap: 10px;
   }
 }

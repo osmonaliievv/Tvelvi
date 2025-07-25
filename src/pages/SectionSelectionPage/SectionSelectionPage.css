@@ -1,7 +1,8 @@
 /* Можно использовать общие стили из BasicFeaturesPage.css как основу */
 .page {
-  background: #f9f9f9;
   padding-top: 50px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .page-title {
@@ -22,14 +23,12 @@
 .steps div {
   width: 16px;
   height: 16px;
-  background: #efefef;
   border-radius: 50px;
 }
 
 .steps span {
   width: 100px;
   height: 6px;
-  background: #efefef;
 }
 
 .steps div.active,

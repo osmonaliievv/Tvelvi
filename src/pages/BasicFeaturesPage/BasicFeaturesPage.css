@@ -1,6 +1,7 @@
 .page {
-  background: #f9f9f9;
   padding-top: 50px;
+  max-width: 600px;
+  margin: 0 auto; /* Центрируем по горизонтали */
 }
 
 .page-title {

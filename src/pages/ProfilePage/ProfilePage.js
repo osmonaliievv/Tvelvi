@@ -45,7 +45,7 @@ const ProfilePage = () => {
     dispatch(fetchUserOrders());
   }, [dispatch]);
 
-  console.log("orders", orders);
+  // console.log("orders", orders);
 
   const handleDeleteAccount = async () => {
     if (!profile?.id) {
@@ -87,11 +87,12 @@ const ProfilePage = () => {
   return (
     <div className="profile-page">
       <div className="profile-content">
-        <div className="text-center relative">
-          <button onClick={() => navigate("/")} className="back_btn">
-            Назад
-          </button>
-          <div className="flex flex-col items-center mt-10">
+        <div className="text-center">
+          <div className="back_btn">
+            <button onClick={() => navigate("/")}>Назад</button>
+          </div>
+
+          <div className="flex flex-col items-center mt-10 profile-header">
             <div className="profile_icon">
               <img
                 src={profileIcon}

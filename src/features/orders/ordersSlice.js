@@ -42,7 +42,7 @@ export const createOrder = createAsyncThunk(
             );
           }
         } catch (refreshError) {
-          window.location.href = "/register";
+          // window.location.href = "/register";
           return rejectWithValue("Сессия истекла. Пожалуйста, войдите снова.");
         }
       }

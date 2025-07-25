@@ -1,5 +1,14 @@
 .successfully {
-  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
+  background: radial-gradient(
+    circle at top center,
+    rgb(203, 205, 248) 20%,
+    rgba(203, 205, 248, 0) 50%
+  );
+
+  background-size: 100% 70%;
+  background-repeat: no-repeat;
+  max-width: 600px;
+  margin: 0 auto; /* Центрируем по горизонтали */
 }
 .successfully-container {
   text-align: center;

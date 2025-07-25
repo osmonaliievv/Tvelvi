@@ -8,14 +8,17 @@ import {
 import { selectProduct } from "../../features/selectedProducts/selectedProductSlice"; // <-- НОВЫЙ ИМПОРТ
 
 import "./HomePage.scss";
-import left_card from "../../assets/Frame 168.svg";
-import center_card from "../../assets/Frame 169.svg";
-import right_card from "../../assets/Frame 170.svg";
+import left_card_1 from "../../assets/Frame 172.svg";
+import left_card_2 from "../../assets/000000001.svg";
+import left_card_11 from "../../assets/Frame 172 (1).svg";
+import left_card_22 from "../../assets/0000000002.svg";
+import left_card_111 from "../../assets/Frame 172 (2).svg";
+import left_card_222 from "../../assets/000000003.svg";
 
-import burgerPhoto from "../../assets/Remove-bg.ai_1732349357302 1.png";
+import burgerPhoto from "../../assets/Frame 209.png";
 
 import img_partners from "../../assets/Remove-bg.ai_1732383936587 1.svg";
-import main_image from "../../assets/Black.svg";
+import main_image from "../../assets/bg home page.svg";
 import { useNavigate } from "react-router-dom";
 import profilesvg from "../../assets/Frame 193.svg";
 import Loading from "../../components/Loading/Loading";
@@ -150,10 +153,6 @@ export default function HomePage() {
             return response.json();
           })
           .then((data) => {
-            // Предполагаем, что ваш API возвращает данные в формате,
-            // который совпадает с MOCK_CATEGORIES_DATA
-            // Если формат отличается, вам нужно будет его преобразовать
-            // Например: data.map(category => ({ ...category, cards: category.products || [] }))
             dispatch(fetchCategoriesSuccess(data));
           })
           .catch((error) => {
@@ -163,7 +162,6 @@ export default function HomePage() {
                 error.message || "Произошла неизвестная ошибка."
               )
             );
-            // Используем моковые данные в случае ошибки
             dispatch(fetchCategoriesSuccess(MOCK_CATEGORIES_DATA));
           });
       };
@@ -257,42 +255,69 @@ export default function HomePage() {
   return (
     <div className="home-container">
       <div className="home-container__inner">
-        <div className="profile_button-cover">
-          <div onClick={handleClick2} className="profile_button">
-            <img src={profilesvg} alt="Профиль" />
+        <div className="main-header_bg">
+          <div className="profile_button-cover">
+            <div onClick={handleClick2} className="profile_button">
+              <img src={profilesvg} alt="Профиль" />
+            </div>
           </div>
-        </div>
-
-        <div className="profile_main-photo">
-          <img src={main_image} alt="Главное изображение" />
-        </div>
-        <div className="home-info-cover">
-          <div className="info-box">
-            <h3>
-              Создайте приложение под <br />
-              ваши задачи
-            </h3>
-            <p>
-              Выберите тип, добавьте функции и <br />
-              настройте под ваш бренд. Мы позаботимся о <br />
-              простоте разработки и успешном запуске!
-            </p>
-            <div className="info-box_card">
-              <div className="info-box_card__left">
-                <img src={left_card} alt="" />
-              </div>
-              <div className="info-box_card__center">
-                <img src={center_card} alt="" />
-              </div>
-              <div className="info-box_card__right">
-                <img src={right_card} alt="" />
+          <div className="profile_mainFlex">
+            <div className="profile_main-photo">
+              <img src={main_image} alt="Главное изображение" />
+            </div>
+            <div className="home-info-cover">
+              <div className="info-box">
+                <div className="info-box_text">
+                  Создайте приложение под ваши задачи
+                </div>
+                <div className="info-box_description">
+                  Выберите тип, добавьте функции и настройте под ваш бренд. Мы
+                  позаботимся о простоте разработки и успешном запуске!
+                </div>
+                <div className="info-box_cardss">
+                  <div className="info-box_card">
+                    <div className="info-box_card_images">
+                      <div className="info-box_card_img">
+                        <img src={left_card_1} alt="" />
+                      </div>
+                      <div className="info-box_card_img">
+                        <img src={left_card_2} alt="" />
+                      </div>
+                    </div>
+                    <div className="info-box_card_text">Выберете желаемое</div>
+                  </div>
+                  <div className="info-box_card">
+                    <div className="info-box_card_images">
+                      <div className="info-box_card_img">
+                        <img src={left_card_11} alt="" />
+                      </div>
+                      <div className="info-box_card_img">
+                        <img src={left_card_22} alt="" />
+                      </div>
+                    </div>
+                    <div className="info-box_card_text">Обсуждение проекта</div>
+                  </div>
+                  <div className="info-box_card">
+                    <div className="info-box_card_images">
+                      <div className="info-box_card_img">
+                        <img src={left_card_111} alt="" />
+                      </div>
+                      <div className="info-box_card_img">
+                        <img src={left_card_222} alt="" />
+                      </div>
+                    </div>
+                    <div className="info-box_card_text">
+                      Старт работ по проекту
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="home-categories">
-          <h2>Категории</h2>
+          <h2 style={{ fontSize: "20px", padding: "0 12px" }}>Категории</h2>
           <div className="buttons-category">
             {categoriesData.map((category, index) => (
               <button
@@ -301,10 +326,15 @@ export default function HomePage() {
                 onClick={() => handleCategoryButtonClick(index)}
                 style={{
                   backgroundColor:
-                    activeCategoryIndex === index ? "#7B61FF" : "#FFFFFF",
+                    activeCategoryIndex === index
+                      ? "rgb(111 53 255)"
+                      : "#FFFFFF",
                   color: activeCategoryIndex === index ? "#FFFFFF" : "#000000",
                   fontSize: "14px",
-                  padding: "8px",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  border: "none",
+                  fontWeight: "500",
                 }}
               >
                 {category.name}
@@ -337,15 +367,14 @@ export default function HomePage() {
                     {category.cards.length > 0 ? (
                       category.cards.map((item) => (
                         <div key={item.id} className="home-cardds">
-                          <div
-                            className="home-cardds__imggg"
-                            style={{ cursor: "pointer" }}
-                          >
-                            <img
-                              src={item.image || burgerPhoto}
-                              alt={item.title}
-                              onClick={() => openModal(item)} // onClick ТОЛЬКО на изображении
-                            />
+                          <div className="home-cardds__imggg_cover">
+                            <div className="home-cardds__imggg">
+                              <img
+                                src={item.image || burgerPhoto}
+                                alt={item.title}
+                                onClick={() => openModal(item)} // onClick ТОЛЬКО на изображении
+                              />
+                            </div>
                           </div>
 
                           <p className="home-cardds__texttt">{item.title}</p>
@@ -362,7 +391,7 @@ export default function HomePage() {
             </div>
           )}
         </div>
-        <div className="w-full max-w-[600px] p-6 rounded-2xl bg-gradient-to-r from-[#E0D8FF] to-[#EAE4FF] flex justify-between items-center relative overflow-hidden shadow-md">
+        <div className="home-partners-container">
           <div className="home-partners">
             <div className="left-partners">
               <h2>Услуги партнёров</h2>
@@ -373,14 +402,13 @@ export default function HomePage() {
               </p>
             </div>
             <div className="right-partners">
-              <img
-                src={img_partners}
-                alt="Partners Illustration"
-                className="w-32 h-auto"
-              />
+              <div className="partners-image">
+                <img src={img_partners} alt="Partners Illustration" />
+              </div>
+
               <button
                 onClick={handleClickForPartners}
-                className="absolute top-4 right-4 bg-white rounded-full p-2 shadow hover:scale-105 transition"
+                className="partners-button"
               >
                 <svg
                   width="14"

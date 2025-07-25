@@ -67,14 +67,14 @@ const FinalPricePage = () => {
       selected_cards: selectedCardIds, // Отправляем массив ID выбранных карт
     };
 
-    console.log("Данные заказа перед отправкой:", orderData);
+    // console.log("Данные заказа перед отправкой:", orderData);
 
     // 2. Отправьте данные заказа
     const result = await dispatch(createOrder(orderData)); // Используем createOrder
 
     // 3. Обработайте результат отправки
     if (createOrder.fulfilled.match(result)) {
-      console.log("Заказ успешно отправлен:", result.payload);
+      // console.log("Заказ успешно отправлен:", result.payload);
       dispatch(clearSelectedCards()); // Очищаем выбранные карточки
       dispatch(clearSelectedProduct()); // Очищаем выбранный продукт с HomePage
       navigate("/successfully/");

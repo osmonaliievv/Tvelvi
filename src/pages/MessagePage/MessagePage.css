@@ -1,7 +1,15 @@
 .MessagePage {
-  background: linear-gradient(to bottom, rgb(192, 194, 248), white);
-  width: 100wh;
+  background: radial-gradient(
+    circle at top center,
+    rgb(203, 205, 248) 20%,
+    rgba(203, 205, 248, 0) 50%
+  );
+
+  background-size: 100% 80%;
+  background-repeat: no-repeat;
+  max-width: 600px;
   height: 100vh;
+  margin: 0 auto;
 }
 .MessagePage-container {
   margin: 0 auto;
@@ -45,6 +53,8 @@ input[type="tel"] {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  max-width: 350px;
+  margin: 20px auto;
 }
 
 .codeInput {
@@ -54,9 +64,9 @@ input[type="tel"] {
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 8px;
-  @media screen and (max-width: 370px) {
-    width: 35px;
-    height: 40px;
+  @media screen and (max-width: 400px) {
+    width: 30px;
+    height: 30px;
   }
 }
 

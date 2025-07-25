@@ -9,7 +9,7 @@ const NextPartnersPage = () => {
   };
   const [items, setItems] = useState([
     { id: 1, added: false },
-    { id: 2, added: true },
+    { id: 2, added: false },
     { id: 3, added: false },
     { id: 4, added: false },
   ]);
@@ -43,7 +43,7 @@ const NextPartnersPage = () => {
               d="M15 19l-7-7 7-7"
             />
           </svg>
-          <h1>Назвние партнёра</h1>
+          <h1 style={{ cursor: "pointer" }}>Назвние партнёра</h1>
         </div>
       </div>
 

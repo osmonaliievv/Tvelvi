@@ -41,7 +41,7 @@ export const sendOrderData = createAsyncThunk(
             return rejectWithValue(errorData);
           }
           const data = await retryResponse.json();
-          console.log("Данные успешно отправлены (retry):", data);
+          // console.log("Данные успешно отправлены (retry):", data);
           return data;
         } catch (error) {
           window.location.href = "/register";
@@ -55,7 +55,7 @@ export const sendOrderData = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log("Данные успешно отправлены:", data);
+      // console.log("Данные успешно отправлены:", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.message);

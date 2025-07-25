@@ -1,4 +1,3 @@
-import React from "react";
 import "./PartnersPage.css";
 import partnersImg from "../../assets/Frame 217.svg";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +46,11 @@ const PartnersPage = () => {
     <div className="p-4">
       <div className="p-777">
         <div className="name_page">
-          <h1 onClick={handleClick} className="text-xl font-semibold">
+          <h1
+            onClick={handleClick}
+            className="text-xl font-semibold"
+            style={{ cursor: "pointer" }}
+          >
             <svg
               width="24"
               height="24"
